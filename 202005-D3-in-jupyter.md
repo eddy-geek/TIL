@@ -30,17 +30,28 @@ require.config({
 
 (alternatively `from IPython.display import Javascript` also works)
 
-This can be further simplified with py_d3 which [allows custom URLs](https://github.com/ResidentMario/py_d3/pull/11) (important for me as I'm behind a firewall).
+This can be further simplified with py_d3 which, in theory, [allows custom URLs](https://github.com/ResidentMario/py_d3/pull/11) -- important for me as I'm behind a firewall -- but I was not able to get it work for me.
 
-Now, how to handle the firewall? Downloading d3.v5.min.js is easy but:
-* I was not able to point RequireJS to a local path. This makes sense in retrospect, as this is executed client-side.
-* **What worked** was to use jupyter to serve it though the `/files/...` endpoint.
-Say that your notebook root URL (tree explorer) is https://jupyter.notebook.net/tree/, and that you can access the folder containing d3.min.js through https://jupyter.notebook.net/tree/foo/bar/.
+So, how to handle the firewall? Downloading d3.v5.min.js is easy but:
+
+### What worked
+...was to use jupyter to serve it though the `/files/...` endpoint.
+
+Say that 
+* your notebook root URL (tree explorer) is https://jupyter.notebook.net/tree/, 
+* and that you can access the folder containing d3.min.js through https://jupyter.notebook.net/tree/foo/bar/.
+
 Then the URL to put is `d3: 'https://jupyter.notebook.net/files/foo/bar/d3.v5.min'`
 
 **(!) A refresh may be necessary between executing the RequireJS cell and actually displaying something.**
 
-Some stuff made it hard to get this working:
+### What did not work?
+
+I was not able to point RequireJS to a local path. This makes sense in retrospect, as this is executed client-side.
+
+### What made it hard to get this working?
+
+Mostly lack of direct feedback from the notebook.
 
 ```javascript
 %%javascript
