@@ -1,19 +1,5 @@
 # Custom D3.js Visualization in a Jupyter Notebook, behind a firewall
 
-Importing D3 directly in `Javascript('<script src="...">')` does not work (anymore? several web resources still advise it).
-
-for example:
-
-```
-%%javascript
-d3
-```
-
-```
-    Javascript error adding output!
-    ReferenceError: d3 is not defined
-    See your browser Javascript console for more details.
-```
 
 The approach that does work is to use Jupyter notebook's built-in RequireJS, as described by Stefaan Lippens' [Custom D3.js Visualization in a Jupyter Notebook](https://www.stefaanlippens.net/jupyter-custom-d3-visualization.html) and livingwithmachines' [D3 JavaScript visualisation in a Python Jupyter notebook](http://livingwithmachines.ac.uk/d3-javascript-visualisation-in-a-python-jupyter-notebook/)
 
@@ -47,7 +33,22 @@ Then the URL to put is `d3: 'https://jupyter.notebook.net/files/foo/bar/d3.v5.mi
 
 ### What did not work?
 
-I was not able to point RequireJS to a local path. This makes sense in retrospect, as this is executed client-side.
+- Importing D3 directly does not work (anymore? several web resources still advise it, like this medium post [D3 in Jupyter notebook](https://medium.com/@stallonejacob/d3-in-juypter-notebook-685d6dca75c8) which also details how to convert a d3.js bl.ocks.org example to Jupyter). For example:
+
+```
+    HTML('<script src="./d3.min.js"></script>')
+
+    %%javascript
+    d3
+```
+
+```
+        Javascript error adding output!
+        ReferenceError: d3 is not defined
+        See your browser Javascript console for more details.
+```
+
+- I was not able to point RequireJS to a local path. This makes sense in retrospect, as this is executed client-side.
 
 ### What made it hard to get this working?
 
