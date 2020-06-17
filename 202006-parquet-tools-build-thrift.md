@@ -19,13 +19,21 @@ index 2ee4bd251..6a44f9b5b 100644
      <fastutil.version>8.2.3</fastutil.version>
      <semver.api.version>0.9.33</semver.api.version>
      <slf4j.version>1.7.22</slf4j.version>
-     
- * Build everything
+```
+
+* Build everything
  
- `mvn package -Plocal`
+ `mvn package -Plocal -DskipTests`
  
- This is because parquet-tools pre-release depends on the same pre-release version (e.g. `1.12.0-SNAPSHOT`) for some dependencies like parquet-format and parquet itself.
+We build everything because parquet-tools pre-release depends on the same pre-release version (e.g. `1.12.0-SNAPSHOT`) for some dependencies like parquet-format and parquet itself.
  
  So if you try building the master branch it fails with stuff like':
  
  > Failed to transfer file: .../org/apache/parquet/parquet/1.12.0-SNAPSHOT/parquet-1.12.0-SNAPSHOT.pom. Return code is: 409 , ReasonPhrase:Conflict.
+ 
+I added -DskipTests to work around this:
+
+>   testZstdConfWithMr(org.apache.parquet.hadoop.TestZstandardCodec): Job failed!
+
+> [INFO] Apache Parquet Hadoop .............................. FAILURE [05:01 min]
+
