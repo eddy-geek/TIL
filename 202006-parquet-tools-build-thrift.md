@@ -27,10 +27,12 @@ index 2ee4bd251..6a44f9b5b 100644
  
 We build everything because parquet-tools pre-release depends on the same pre-release version (e.g. `1.12.0-SNAPSHOT`) for some dependencies like parquet-format and parquet itself.
  
- So if you try building the master branch it fails with stuff like':
+So if you try building the master branch it fails with stuff like':
  
  > Failed to transfer file: .../org/apache/parquet/parquet/1.12.0-SNAPSHOT/parquet-1.12.0-SNAPSHOT.pom. Return code is: 409 , ReasonPhrase:Conflict.
- 
+
+Instead you can further tweak the versions in parquet-mr/pom.xml and also parquet-mr/parquet-tools/pom.xml as [here](https://mapr.com/support/s/article/How-to-build-and-use-parquet-tools-to-read-parquet-files)... if you think versions are source-compatible.
+
 I added -DskipTests to work around this:
 
 >   testZstdConfWithMr(org.apache.parquet.hadoop.TestZstandardCodec): Job failed!
