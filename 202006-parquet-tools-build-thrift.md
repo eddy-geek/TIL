@@ -1,3 +1,9 @@
+I wanted to use to get column statistics with
+
+`parquet-tools column-size foo.parquet`
+
+but the [PARQUET-1821: Add 'column-size' command](https://github.com/apache/parquet-mr/commit/d00b2f105f9f732e310ed43c7bfb318213e1ac81) is (was?) not released yet.
+
 * Clone
 
 `git clone https://github.com/apache/parquet-format`
@@ -39,3 +45,18 @@ I added -DskipTests to work around this:
 
 > [INFO] Apache Parquet Hadoop .............................. FAILURE [05:01 min]
 
+Nte that this will take ages
+
+```
+[INFO] Reactor Summary for Apache Parquet MR 1.12.0-SNAPSHOT:
+[INFO] 
+[INFO] Apache Parquet MR .................................. SUCCESS [  2.261 s]
+[INFO] Apache Parquet Format Structures ................... SUCCESS [  3.821 s]
+[INFO] Apache Parquet Generator ........................... SUCCESS [ 13.160 s]
+[INFO] Apache Parquet Common .............................. SUCCESS [ 34.010 s]
+[INFO] Apache Parquet Encodings ........................... SUCCESS [  8.854 s]
+[INFO] Apache Parquet Column .............................. SUCCESS [23:31 min]
+[INFO] Apache Parquet Arrow ............................... SUCCESS [ 47.884 s]
+[INFO] Apache Parquet Jackson ............................. SUCCESS [ 24.727 s]
+...
+```
