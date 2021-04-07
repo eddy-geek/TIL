@@ -2,7 +2,7 @@
 # Helper to show what we have inside an mbtile: min/max zoom, number of tiles, bounds.
 
 mbt_info() {
-  echo "SELECT MIN(zoom_level), MAX(zoom_level), COUNT(*) FROM tiles ; SELECT value FROM metadata WHERE name = 'bounds';" | sqlite3 "$1" | tr '\n' ' '
+  echo "SELECT MIN(zoom_level), MAX(zoom_level), COUNT(*) FROM tiles ; SELECT value FROM metadata WHERE name IN ('format', 'bounds');" | sqlite3 "$1" | tr '\n' ' '
   echo
 }
 

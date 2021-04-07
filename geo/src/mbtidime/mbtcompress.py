@@ -42,11 +42,10 @@ def sum_size(paths):
     return sum(os.stat(path).st_size for path in paths)
 
 
-def mbt_compress(conn, mbtpath):
+def mbt_compress(conn, dst_conn, tilefolder):
     # dest = mbtpath.replace('.mbtiles', '-compressed.mbtiles')
     # assert not os.path.exists(dest), 'Not overwriting ' + dest
     # tmp dir:
-    tilefolder = 'tiles-' + mbtpath.replace('.mbtiles', '')
     os.makedirs(tilefolder, exist_ok=True)
 
     ntiles = conn.execute("SELECT COUNT(*) FROM tiles;").fetchone()[0]
@@ -63,7 +62,7 @@ def mbt_compress(conn, mbtpath):
         size_before = 0
 
         for zoom_level, tile_column, tile_row, tile_data in islice(c_select, N_TILES_BATCH):
-            tile_path = f"{tilefolder}/{zoom_level}-{tile_column}-{tile_row}.{fmt}"
+            tile_path = f"{tilefolder}/{zoom_level}-{tile_column}-{tile_row}.png"
             with io.open(tile_path, 'wb') as f:
                 f.write(tile_data)
             paths[tile_path] = (zoom_level, tile_column, tile_row, os.stat(tile_path).st_size)
@@ -105,10 +104,13 @@ def mbt_compress(conn, mbtpath):
                     with open(tile_path, 'rb') as f:
                         yield (f.read(), zoom_level, tile_column, tile_row)
 
-        update_query = "UPDATE tiles SET tile_data=? WHERE zoom_level=? AND tile_column=? AND tile_row=?"
-        n_updated = conn.executemany(update_query, row_iter()).rowcount
-        conn.commit()
-        
+        if conn != dst_conn:
+            query = "INSERT INTO tiles (tile_data, zoom_level, tile_column, tile_row) VALUES (?,?,?,?)"
+        else:
+            query = "UPDATE tiles SET tile_data=? WHERE zoom_level=? AND tile_column=? AND tile_row=?"
+        n_updated = dst_conn.executemany(query, row_iter()).rowcount
+        dst_conn.commit()
+
         nprocessed += len(paths)
         print('Sizes', '->'.join(map(str,sizes)),
               '; Updated: ', n_updated,
@@ -117,22 +119,38 @@ def mbt_compress(conn, mbtpath):
         for tile_path in paths:
             os.remove(tile_path)  # (keep files until inserted correctly)
 
-    conn.execute('VACUUM;')
     conn.close()
 
 
-def main(mbtpath):
+def main(mbtpath, create_path=''):
     conn = sqlite3.connect(mbtpath)
     try:
         fmt = conn.execute("SELECT value FROM metadata WHERE name='format'").fetchone()[0].lower()
         assert fmt == 'png', 'Expected PNG format, got ' + fmt
 
-        mbt_compress(conn, mbtpath)
+        if create_path:
+            is_new = not os.path.isfile(create_path)
+            dst_conn = sqlite3.connect(create_path)
+            if is_new:
+                dst_conn.executescript(f'''
+                    ATTACH "{mbtpath}" AS old;
+                    CREATE TABLE tiles (zoom_level integer, tile_column integer, tile_row integer, tile_data blob);
+                    CREATE UNIQUE INDEX tiles_idx ON tiles (zoom_level, tile_column, tile_row);
+                    CREATE TABLE metadata (name text, value text);
+                    INSERT INTO metadata SELECT * FROM old.metadata;
+                ''')
+        else:
+            dst_conn = conn
+        tilefolder = 'tiles-' + mbtpath.replace('.mbtiles', '')
+        mbt_compress(conn, dst_conn, tilefolder)
+        if not create_path:  # compress existing
+            conn.execute('VACUUM;')
     finally:
         conn.close()
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2 or sys.argv[1] in ('-h', '--help'):
+        print(sys.argv[0], '<mbtiles_to_read> [mbtiles_to_write]')
+        exit(-1)
     main(*sys.argv[1:])
-
-# eg mbtdisplay.py frit1.mbtiles 44.1152 7.42 9

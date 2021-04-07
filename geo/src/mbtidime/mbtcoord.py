@@ -17,6 +17,8 @@ def deg2num(lat_deg, lon_deg, zoom):
 def num2deg(xtile, ytile, zoom):
     '''TMS map tile numbers to lon./lat.'''
     # FIXME this is returning the wrong corner so far
+    # doc https://docs.microsoft.com/en-us/bingmaps/articles/bing-maps-tile-system
+    # https://github.com/ecometrica/gdal2mbtiles/blob/master/gdal2mbtiles/gdal.py#L677
     n = 2.0 ** zoom
     lon_deg = xtile / n * 360.0 - 180.0
     lat_rad = -math.atan(math.sinh(math.pi * (1 + 2 * (1-ytile) / n )))
