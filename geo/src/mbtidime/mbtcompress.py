@@ -13,7 +13,7 @@ import sqlite3
 
 
 # Enable run as script: ./mbtdisplay.py
-SCRIPT_DIR = os.path.realpath(os.path.dirname(inspect.getfile(inspect.currentframe())))
+SCRIPT_DIR = os.path.realpath(os.path.dirname(inspect.getfile(inspect.currentframe())))  #type:ignore
 ROOT_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
 sys.path.append(ROOT_DIR)
 
@@ -87,7 +87,8 @@ def mbt_compress(conn, dst_conn, tilefolder):
             path_it = iter(paths)
             for _ in range(N_SHELL_PROCESSES):
                 path_batch = list(islice(path_it, shell_batch_size))
-                threads.append(subprocess.Popen(cmd + path_batch))
+                if path_batch:  # not at the very end
+                    threads.append(subprocess.Popen(cmd + path_batch))
 
             for x in threads:
                 retcode = x.wait()

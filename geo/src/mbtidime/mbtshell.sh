@@ -38,7 +38,7 @@ EOF
 
 # Extract given tile number: x/y given as TMS coordinates, and z zoom level
 
-tile_zxy() { # tile $mbtiles $z $x $y [$dest_folder]
+mbt_tile_zxy() { # mbt_tile_zxy $mbtiles $z $x $y [$dest_folder]
   foldr="${5:-"${1/.mbtiles/}-tiles"}"
   mkdir -p $foldr
   ext=$(sqlite3 "$1" "SELECT value FROM metadata WHERE name='format'")
@@ -47,7 +47,7 @@ tile_zxy() { # tile $mbtiles $z $x $y [$dest_folder]
   ls -l $foldr/$2-$3-$4.$ext
 }
 
-first_tile() { # first_tile $mbtiles
+mbt_first_tile() { # mbt_first_tile $mbtiles
   tpath=${1/.mbtiles/}-firsttile.$ext
   echo -n "$tpath "
   ext=$(sqlite3 "$1" "SELECT value FROM metadata WHERE name='format'")
