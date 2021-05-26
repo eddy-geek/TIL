@@ -4,9 +4,14 @@ git clone https://github.com/llvm/llvm-project.git --depth=1
 cd llvm-project
 mkdir build
 cd build
-cmake -G Ninja -DLLVM_ENABLE_PROJECTS=clang\;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD ../llvm
+cmake -G Ninja -DLLVM_ENABLE_PROJECTS=clang\;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../llvm
 ninja check-clang-tools
 ```
+
+* `-G ninja`: as recommended
+* `LLVM_ENABLE_PROJECTS=clang;clang-tools-extra`: as clang-tidy is in extra, but check-clang-tools is in clang.
+* `CMAKE_EXPORT_COMPILE_COMMANDS=ON`: generate compile_commands.json (also useful for vscode). From [How To Setup Tooling For LLVM](https://clang.llvm.org/docs/HowToSetupToolingForLLVM.html)
+* `CMAKE_INSTALL_PREFIX=$PWD`: change if on windows.
 
 #### Example:
 
