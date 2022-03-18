@@ -22,7 +22,9 @@ Cloud support is even worse:
 | ------------- | ---- | ----                         |
 | Google Photos | ✓    | ✓ as .avif only              |
 | Dropbox       | ✓    | ✕ (AVIF in .heic looks gray) |
-| pCloud        | ✕    | ✕                            |
+| pCloud        | ✕    | ✕ [soon][1]                           |
+
+[1][https://twitter.com/pcloudapp/status/1304039310497320962?lang=fr]
 
 The best resource for linux support is [askubuntu](https://askubuntu.com/a/965306/220798).
 
