@@ -9,7 +9,12 @@ So a *.heic* have both HEIF or AVIF! and [libheif](https://github.com/strukturag
 * AVIF: 2019. from AOM (WebP/VP9), video codec AV1 (2018), free -> supported in Chrome, FF, Android 12, but not iOS/Samsung :-(
 
 While AVIF will eventually have wider support, it is late to the party, and Apple/Samsung already committed to HEIF especially on mobile.
-Eg [Android 12 added built-in AVIF support](https://developer.android.com/about/versions/12/features#avif) ([doc](https://developer.android.com/reference/android/graphics/ImageFormat) needs an update), it's now supported in Google *Files* app and Samsung *Gallery*, but Samsung *Camera* and *My Files* still has only HEIF support.
+Eg [Android 12 added built-in AVIF support](https://developer.android.com/about/versions/12/features#avif) it's still abit rough:
+* ✕ Android API [doc](https://developer.android.com/reference/android/graphics/ImageFormat) needs an update
+* ✓ thumbnailing *.avif* is now supported in Google *Files* app and Samsung *Gallery*
+* ✕ Samsung *Camera* only records heif
+* ✕ Samsung *My Files* will not thumbnail *.avif*. Renaming works.
+* No apps is registered to open *.avif*. Again, rename to work-around.
 
 The best resource for linux support is [askubuntu](https://askubuntu.com/a/965306/220798).
 
