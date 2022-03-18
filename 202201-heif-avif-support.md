@@ -16,6 +16,14 @@ Eg [Android 12 added built-in AVIF support](https://developer.android.com/about/
 * ✕ Samsung *My Files* will not thumbnail *.avif*. Renaming works.
 * No apps is registered to open *.avif*. Again, rename to work-around.
 
+Cloud support is even worse:
+
+| Cloud         | HEIF | AVIF                         |
+| ------------- | ---- | ----                         |
+| Google Photos | ✓    | ✓ as .avif only              |
+| Dropbox       | ✓    | ✕ (AVIF in .heic looks gray) |
+| pCloud        | ✕    | ✕                            |
+
 The best resource for linux support is [askubuntu](https://askubuntu.com/a/965306/220798).
 
 ## ImageMagick
