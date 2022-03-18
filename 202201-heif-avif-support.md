@@ -9,6 +9,9 @@ So a *.heic* can have both HEIF or AVIF! and [libheif](https://github.com/strukt
 * AVIF: 2019. from AOM (WebP/VP9), video codec AV1 (2018), free -> supported in Chrome, FF, Android 12, but not iOS/Samsung :-(
 
 While AVIF will eventually have wider support, it is late to the party, and Apple/Samsung already committed to HEIF especially on mobile.
+
+Resources for support include https://avif.io and [wikipedia](https://en.wikipedia.org/wiki/AVIF)
+
 Eg [Android 12 added built-in AVIF support](https://developer.android.com/about/versions/12/features#avif) it's still abit rough:
 * ✕ Android API [doc](https://developer.android.com/reference/android/graphics/ImageFormat) needs an update
 * ✓ thumbnailing *.avif* is now supported in Google *Files* app and Samsung *Gallery*
