@@ -3,7 +3,7 @@
 Unfortunately support is till not as widespread as I'd like.
 
 AVIF reused the same container format from HEIF: HEIC, itself based on [this ISO format](https://en.wikipedia.org/wiki/ISO/IEC_base_media_file_format)
-So a *.heic* have both HEIF or AVIF! and [libheif](https://github.com/strukturag/libheif) supports both. Not confusing at all.
+So a *.heic* can have both HEIF or AVIF! and [libheif](https://github.com/strukturag/libheif) supports both. Not confusing at all.
 
 * HEIF: 2015. from VCEG/MPEG, video codec HEVC/H265 (2013), patent encumbered -> no browser support
 * AVIF: 2019. from AOM (WebP/VP9), video codec AV1 (2018), free -> supported in Chrome, FF, Android 12, but not iOS/Samsung :-(
