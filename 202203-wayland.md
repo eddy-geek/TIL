@@ -8,11 +8,4 @@ Yes!
 
 ## Screensharing
 
-
-```
-sudo apt install xdg-desktop-portal-gnome gnome-remote-desktop
-
-systemctl --user start pipewire-media-session
-```
-
-*(`gnome-remote-desktop` depends on `pipewire-media-session`)*
+See my answer for [Screen sharing with Wayland](https://askubuntu.com/a/1398720/220798) on AskUbuntu.
