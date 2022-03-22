@@ -9,6 +9,10 @@ Yes!
 ## Screensharing
 
 
-`sudo apt install xdg-desktop-portal-gnome gnome-remote-desktop`
+```
+sudo apt install xdg-desktop-portal-gnome gnome-remote-desktop
+
+systemctl --user start pipewire-media-session
+```
 
 *(`gnome-remote-desktop` depends on `pipewire-media-session`)*
