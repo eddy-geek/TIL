@@ -5,7 +5,7 @@
 ✅ Yes!
 
 * Firefox, by default
-* Chrome, with:
+* Chrome, since around Chrome 91 / May 2021, with a [flag](https://bugs.chromium.org/p/chromium/issues/detail?id=1085700):
 `google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland &`
 
 
@@ -19,9 +19,13 @@ See my answer for [Screen sharing with Wayland](https://askubuntu.com/a/1398720/
 
 While one was able to set a custom keybord layout from command-line in X11 using `xkbcomp` and `setxkbmap`, for Wayland the existing XKB tools were split-forked from X and refactored into libxkbcommon, which mainstream compositors directly embed.
 
-Luckily libxkbcommon 0.10.0 (jan2020) and 1.0.0 (Sep2020) improve things, as explained by Peter Hutterer in a great 4-part blog series [User-specific XKB configuration](https://web.archive.org/web/20210828193033/https://who-t.blogspot.com/2020/09/user-specific-xkb-configuration-putting.html), and  [as well](https://github.com/xkbcommon/libxkbcommon/blob/master/NEWS).
+Luckily libxkbcommon 0.10.0 (Jan2020) and 1.0.0 (Sep2020) improve things, as explained by Peter Hutterer in a great 4-part blog series [User-specific XKB configuration](https://web.archive.org/web/20210828193033/https://who-t.blogspot.com/2020/09/user-specific-xkb-configuration-putting.html).
 
-🗲 TODO: try!
+See the libxkbcommon [User-configuration](https://xkbcommon.org/doc/current/md_doc_user_configuration.html) doc.
+
+🗲 TODO: try! 
+
+*(for the jealous there's also a [workaround for X11](https://web.archive.org/web/20210303023436/https://who-t.blogspot.com/2021/02/a-pre-supplied-custom-keyboard-layout.html) in xkeyboard-config 2.33)*
 
 ## Automation
 
@@ -31,7 +35,7 @@ Luckily libxkbcommon 0.10.0 (jan2020) and 1.0.0 (Sep2020) improve things, as exp
 
 * ✅ KWin Custom shortcuts can input text
 
-* ❌ Tools like xmodmap don't work with Wayland.
+* 🕱 Tools like xmodmap, xbindkeys don't work with Wayland, but feature-set is arguably covered by the above.
 
 * ⏳ Mouse-sharing support between devices or VMs: coming soon? See [barrier#109](https://github.com/debauchee/barrier/issues/109#issuecomment-1049479068)
 
