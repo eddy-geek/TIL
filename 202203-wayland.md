@@ -8,4 +8,7 @@ Yes!
 
 ## Screensharing
 
+
 `sudo apt install xdg-desktop-portal-gnome gnome-remote-desktop`
+
+*(`gnome-remote-desktop` depends on `pipewire-media-session`)*
