@@ -25,7 +25,10 @@ See the libxkbcommon [User-configuration](https://xkbcommon.org/doc/current/md_d
 
 🗲 TODO: try! 
 
-*(for the jealous there's also a [workaround for X11](https://web.archive.org/web/20210303023436/https://who-t.blogspot.com/2021/02/a-pre-supplied-custom-keyboard-layout.html) in xkeyboard-config 2.33)*
+Also, the [pre-supplied <i>custom</i> keyboard layout](https://web.archive.org/web/20210303023436/https://who-t.blogspot.com/2021/02/a-pre-supplied-custom-keyboard-layout.html) in xkeyboard-config 2.33 works in both Wayland and X11. In Ubuntu 22.04:
+
+![image](https://user-images.githubusercontent.com/2772505/159658641-cc084ad7-f7f8-4629-a40e-7d75bfdc0fd6.png)
+
 
 ## Automation
 
