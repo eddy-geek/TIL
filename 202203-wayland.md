@@ -54,6 +54,23 @@ Also, the [pre-supplied <i>custom</i> keyboard layout](https://web.archive.org/w
 
 * ❌ GUI-agnostic "screen-scraping" tool [SikuliX](https://sikulix.github.io/), could be adapted to use the screen-sharing portal.
 
+## Toolkits
+
+### Qt in Gnome
+
+✅ Yes with setup. By default 
+* Qt apps start with X and *`Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway.`*
+Workaround with `` in `~/.profile`
+* They look bad, especially when using GTK4 Adwaita-dark, and the default `qt5-gtk-platformtheme` makes it worse. I went with the default KDE look doing the following:
+```bash
+sudo apt remove qt5-gtk-platformtheme
+sudo apt install breeze plasma-integration
+# in ~/.profile:
+export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORMTHEME=kde
+```
+
+![Screenshot from 2022-03-23 16-45-23](https://user-images.githubusercontent.com/2772505/159740347-ec622567-6ffd-460d-a9ea-207ecc30d7ca.png)
 
 ## Other
 
