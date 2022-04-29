@@ -17,7 +17,7 @@ sudo apt install neon-desktop
 
 * Use most recent pipewire to e.g. [use apt-X bluetooth](https://askubuntu.com/a/1364896/220798).
 
-* Useful PPAs
+* Useful PPAs ([list packages installed from PPAs](https://askubuntu.com/a/1320843/220798))
 
   * savoury1/multimedia/ubuntu: `(lib)gstreamer*`
   * savoury1/backports/ubuntu : `flatpak, git remmina, xdg-desktop-portal`, ...
