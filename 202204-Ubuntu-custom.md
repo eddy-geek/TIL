@@ -10,7 +10,7 @@
 ## Ubuntu 22.04
 
 * [install Firefox deb package (no snap)](https://askubuntu.com/a/1404401/220798)
-* [Screen-sharing with Wayland](https://askubuntu.com/a/1398720/220798) [with wireplumber](https://bugs.launchpad.net/ubuntu/+source/bluez/+bug/1966436)
+* [Screen-sharing with Wayland](https://askubuntu.com/a/1398720/220798), [with wireplumber](https://bugs.launchpad.net/ubuntu/+source/bluez/+bug/1966436)
 
 * Useful PPAs
   * [deadsnakes/ppa](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa?field.series_filter=jammy) : `python3.11`
@@ -39,6 +39,6 @@ sudo apt install neon-desktop
   * libreoffice/ppa : `libreoffice`
   * pipewire-debian/pipewire-upstream : `pipewire`
   * [ubuntugis/ubuntugis-unstable](https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable) : `gdal`
-  * [savoury1](https://launchpad.net/~savoury1)/backports : `flatpak, git remmina, xdg-desktop-portal`, ...
+  * [savoury1](https://launchpad.net/~savoury1)/backports : `flatpak, git, remmina, xdg-desktop-portal`, ...
   * savoury1/multimedia: `(lib)gstreamer*`
 
