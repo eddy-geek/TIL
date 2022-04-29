@@ -19,13 +19,13 @@ sudo apt install neon-desktop
 
 * Useful PPAs ([list packages installed from PPAs](https://askubuntu.com/a/1320843/220798))
 
-  * savoury1/multimedia/ubuntu: `(lib)gstreamer*`
-  * savoury1/backports/ubuntu : `flatpak, git remmina, xdg-desktop-portal`, ...
   * bleedingedge/focal-bleed/ubuntu : `bash, imagemagick, sqlite3, vim, vlc, zsh, ffmpeg, dav1d` (AV1 video codec), `gdal` (geo), drivers...
+  * deadsnakes/ppa/ubuntu : `python3.9, python3.10`
   * libreoffice/ppa/ubuntu : `libreoffice`
   * pipewire-debian/pipewire-upstream/ubuntu : `pipewire`
-  * deadsnakes/ppa/ubuntu : `python3.9, python3.10`
   * ubuntugis/ubuntugis-unstable/ubuntu : `gdal`
+  * savoury1/multimedia/ubuntu: `(lib)gstreamer*`
+  * savoury1/backports/ubuntu : `flatpak, git remmina, xdg-desktop-portal`, ...
 
 ## Tricks
 
