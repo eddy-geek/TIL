@@ -13,6 +13,8 @@
 * [Screen-sharing with Wayland](https://askubuntu.com/a/1398720/220798), [with wireplumber](https://bugs.launchpad.net/ubuntu/+source/bluez/+bug/1966436)
 
 * Useful PPAs
+  * [onedrive](https://github.com/abraunegg/onedrive/blob/master/docs/ubuntu-package-install.md#distribution-ubuntu-2204)
+  * [gpxsee](https://software.opensuse.org/download.html?project=home%3Atumic%3AGPXSee&package=gpxsee)
   * [deadsnakes/ppa](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa?field.series_filter=jammy) : `python3.11`
   * [savoury1/backports](https://launchpad.net/~savoury1/+archive/ubuntu/backports?field.series_filter=jammy)
   * [savoury1/fonts](https://launchpad.net/~savoury1/+archive/ubuntu/fonts?field.series_filter=jammy)
