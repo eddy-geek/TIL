@@ -1,9 +1,11 @@
 # Switching from KDE/KWin to sway
 
-* features of kde can be replicated at some level with bash scripts
-* tools: **[Useful add ons for sway](https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway)
+Wayland ecosystem:
+* **[Useful add ons for sway](https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway)** and [Common X11 apps used on i3 with Wayland alternatives](https://github.com/swaywm/sway/wiki/i3-Migration-Guide#common-x11-apps-used-on-i3-with-wayland-alternatives)
+* [Wayland_Desktop_Landscape](https://wiki.gentoo.org/wiki/Wayland_Desktop_Landscape)
+* https://arewewaylandyet.com
 
-*Below I choose only the main alternatives, full list above.
+*Below I list some comnmon choices, full list above.*
 
 | What           | KDE                           | Alternatives |
 | ---            | ---                           | ---|
@@ -24,7 +26,6 @@
 
 For quick application focus-or-run:
 * on KDE I used KWin scripts
-  * on Sway, see [Window switching in Sway
-](https://curiouscoding.nl/2021/07/01/sway-window-switching/)
+* on Sway, see [Window switching in Sway](https://curiouscoding.nl/2021/07/01/sway-window-switching/)
 
 In ubuntu jammy repo: `flameshot grimshot slurp sway swaybg swayidle swaylock waybar wl-clipboard wofu`. Missing: Sway Settings, SwayNC, rofi-fork.
