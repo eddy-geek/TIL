@@ -30,4 +30,7 @@ For quick application focus-or-run:
 * on KDE I used KWin scripts
 * on Sway, see [Window switching in Sway](https://curiouscoding.nl/2021/07/01/sway-window-switching/)
 
-In ubuntu jammy repo: `flameshot grimshot slurp sway swaybg swayidle swaylock waybar wl-clipboard wofu`. Missing: Sway Settings, SwayNC, rofi-fork.
+Distro support
+* Arch has the best support
+* In ubuntu jammy repo: `flameshot grimshot slurp sway swaybg swayidle swaylock waybar wl-clipboard wofu`. Missing: Sway Settings, SwayNC, rofi-fork.
+* [fedora packages](https://fedoraproject.org/wiki/SIGs/Sway)
