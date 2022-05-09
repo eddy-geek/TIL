@@ -32,5 +32,5 @@ For quick application focus-or-run:
 
 Distro support
 * Arch has the best support
-* In ubuntu jammy repo: `flameshot gammastep grimshot kanshi mako-notifier slurp sway swaybg swayidle swaylock waybar wdisplay wl-clipboard wlroots wofu xdg-desktop-portal-wlr`. Missing: Sway Settings, SwayNC, rofi-fork, alacritty.
+* In ubuntu jammy repo: `flameshot gammastep grimshot kanshi mako-notifier slurp sway swaybg swayidle swaylock waybar wdisplay wl-clipboard wlroots wofu xdg-desktop-portal-wlr`. Missing: Sway Settings, SwayNC, rofi-fork, alacritty ([ppa](https://launchpad.net/~aslatter/+archive/ubuntu/ppa)).
 * [fedora packages](https://fedoraproject.org/wiki/SIGs/Sway)
