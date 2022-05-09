@@ -7,6 +7,7 @@
 * Firefox, by default
 * Chrome, since around Chrome 91 / May 2021, with a [flag](https://bugs.chromium.org/p/chromium/issues/detail?id=1085700):
 `google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland &`
+* With Chjrome > 97: `google-chrome-stable --ozone-platform-hint=auto`
 
 
 ## Screensharing
