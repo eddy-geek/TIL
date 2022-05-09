@@ -1,5 +1,7 @@
 # Switching from KDE/KWin to sway
 
+All-in-one aproach: [nwg-shell](https://github.com/nwg-piotr/nwg-shell) & [archlabslinux](https://archlabslinux.com/)
+
 Wayland ecosystem:
 * **[Useful add ons for sway](https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway)** and [Common X11 apps used on i3 with Wayland alternatives](https://github.com/swaywm/sway/wiki/i3-Migration-Guide#common-x11-apps-used-on-i3-with-wayland-alternatives)
 * [Wayland_Desktop_Landscape](https://wiki.gentoo.org/wiki/Wayland_Desktop_Landscape)
