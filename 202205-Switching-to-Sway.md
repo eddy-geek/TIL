@@ -20,7 +20,7 @@ Wayland ecosystem:
 | Clipboard      | Klipper                       | wl-clipboard
 | Screen capture | Spectacle                     | <ul><li>[slurp](https://github.com/emersion/slurp) + [grim](https://sr.ht/~emersion/grim/)<li>flameshot</ul>
 | Screen sharing | xdg-desktop-portal-kde        | [xdg-desktop-portal-wlr](https://github.com/emersion/xdg-desktop-portal-wlr)
-| Settings       | systemsettings5               | [Sway Settings](https://github.com/ErikReider/SwaySettings)
+| Settings       | systemsettings5               | [Sway Settings](https://github.com/ErikReider/SwaySettings), nwg-shell-config, kanshi, wdisplays
 | Sound          | plasma-pa                     | pavucontrol
 | Network        | plasma-nm                     | nm-applet/nmtui
 | Bluetooth      | qml-module-org-kde-bluezqt    | blueman/bluethoothctl
@@ -32,5 +32,5 @@ For quick application focus-or-run:
 
 Distro support
 * Arch has the best support
-* In ubuntu jammy repo: `flameshot grimshot slurp sway swaybg swayidle swaylock waybar wl-clipboard wofu`. Missing: Sway Settings, SwayNC, rofi-fork.
+* In ubuntu jammy repo: `flameshot gammastep grimshot kanshi mako-notifier slurp sway swaybg swayidle swaylock waybar wdisplay wl-clipboard wlroots wofu xdg-desktop-portal-wlr`. Missing: Sway Settings, SwayNC, rofi-fork, alacritty.
 * [fedora packages](https://fedoraproject.org/wiki/SIGs/Sway)
