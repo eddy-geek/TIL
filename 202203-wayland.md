@@ -72,6 +72,16 @@ export QT_QPA_PLATFORMTHEME=kde
 
 ![Screenshot from 2022-03-23 16-45-23](https://user-images.githubusercontent.com/2772505/159740347-ec622567-6ffd-460d-a9ea-207ecc30d7ca.png)
 
+## Dev tools
+
+* ✅ VSCode ([issue](https://github.com/microsoft/vscode/issues/109176))
+
+```sh
+echo "--enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer
+--ozone-platform=wayland
+--ozone-platform-hint=auto" >! ~/.config/electron17-flags.conf
+```
+
 ## Other
 
 * Middle-mouse paste - ✅ yes! at least between wayland apps.
