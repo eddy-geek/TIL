@@ -44,3 +44,18 @@ sudo apt install neon-desktop
   * [savoury1](https://launchpad.net/~savoury1)/backports : `flatpak, git, remmina, xdg-desktop-portal`, ...
   * savoury1/multimedia: `(lib)gstreamer*`
 
+### Gnome settings
+
+```sh
+# Week numbers in the clock calendar
+gsettings set org.gnome.desktop.calendar show-weekdate true
+# Faster Mouse/Touchpad and invert scrolling
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+gsettings set org.gnome.desktop.peripherals.touchpad speed 0.4
+gsettings set org.gnome.desktop.peripherals.mouse speed 0.3
+gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
+# Power > Blank screen > 10 minutes
+gsettings set org.gnome.desktop.session idle-delay 600
+# Privacy > Screen Lock > Lock screen after blank for > 30 seconds
+gsettings set org.gnome.desktop.screensaver lock-delay 30
+```
