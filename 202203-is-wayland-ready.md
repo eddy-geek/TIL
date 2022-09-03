@@ -97,6 +97,7 @@ echo "--enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWire
 
 * Middle-mouse paste - ✅ yes! at least between wayland apps.
 * Focus stealing - ❌
-    * KDE should have [Full xdg_activation_v1 support](https://invent.kde.org/plasma/kwin/-/issues/39) but apps do not support it:
+  * KDE should have [Full xdg_activation_v1 support](https://invent.kde.org/plasma/kwin/-/issues/39) but apps do not support it:
     * [Previously opened Firefox window is not focused when opening a link from other applications](https://bugzilla.mozilla.org/show_bug.cgi?id=1766269).
     * Chromium [wayland: Support window activation via standard extensions](https://bugs.chromium.org/p/chromium/issues/detail?id=1175327)
+  * Sway has support as well since March '21, [sway#6132](https://github.com/swaywm/sway/pull/6132)
