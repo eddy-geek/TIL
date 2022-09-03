@@ -1,5 +1,10 @@
 # Is Wayland ready in 2022?
 
+TL;DR: **"Yes but"**:
+* lack of focus stealing (WIP) is really annoying.
+* Command-line setup is needed as many apps will run on XWayland *by default* -- which is "transparent" until it isn't (eg fractional scaling on HiDPI displays)
+* Stability is worse compared to X11 session due to intolerance to crashes [RH#1367666](https://bugzilla.redhat.com/show_bug.cgi?id=1367666)
+
 ## Web browsers
 
 ✅ Yes!
@@ -31,12 +36,13 @@ Also, the [pre-supplied <i>custom</i> keyboard layout](https://web.archive.org/w
 <img src="https://user-images.githubusercontent.com/2772505/159658641-cc084ad7-f7f8-4629-a40e-7d75bfdc0fd6.png" width="262">
 
 
-
 ## Automation
 
 ### Input-centric
 
 * ✅ [Hawck](https://github.com/snyball/Hawck) key-rebinding daemon with lua scripting (root!)
+
+* ✅ [phil294/AHK_X11: AutoHotkey for Linux (X11-based systems)](https://github.com/phil294/AHK_X11)
 
 * ✅ KWin Custom shortcuts can input text
 
