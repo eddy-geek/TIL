@@ -13,7 +13,7 @@ Wayland ecosystem:
 | ---            | ---                           | ---|
 | Window Manager | KWin-Wayland                  | Sway
 | Panel/Taskbar  | (plasma-workspace)            | [waybar](https://github.com/Alexays/Waybar) (better than stock `swaybar`)
-| App launchers  | Kickoff/Kicker/KRunner        | <ul><li>**[rofi (fork)](https://github.com/lbonn/rofi)** or rofi+xwayland - *switcher+launcher+dmenu*<li>[sway-launcher-desktop](https://github.com/Biont/sway-launcher-desktop)<li>[wofi](https://hg.sr.ht/~scoopta/wofi) (unmaintained)<li>[dmenu-wl](https://github.com/nyyManni/dmenu-wayland) or dmenu+xwayland</ul>
+| App launchers  | Kickoff/Kicker/KRunner        | <ul><li>**[rofi (fork)](https://github.com/lbonn/rofi)**([upstream issue](https://github.com/davatorium/rofi/issues/446)) or rofi+xwayland - *switcher+launcher+dmenu*<li>[sway-launcher-desktop](https://github.com/Biont/sway-launcher-desktop)<li>[wofi](https://hg.sr.ht/~scoopta/wofi) (unmaintained)<li>[dmenu-wl](https://github.com/nyyManni/dmenu-wayland) or dmenu+xwayland</ul>
 | App switcher   |                               | Rofi or [Swayr](https://sr.ht/~tsdh/swayr/)
 | Notifications  |qml-module-org-kde-notification| <ul><li>[Sway Notification Center](https://github.com/ErikReider/SwayNotificationCenter)<li>[mako](https://github.com/emersion/mako)</ul>
 | Screen locker  | libkscreenlocker5             | [swaylock](https://github.com/swaywm/swaylock) screen locker
