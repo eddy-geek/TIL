@@ -5,14 +5,18 @@ TL;DR: **"Yes but"**:
 * Command-line setup is needed as many apps will run on XWayland *by default* -- which is "transparent" until it isn't (eg fractional scaling on HiDPI displays)
 * Stability is worse compared to X11 session due to intolerance to crashes [RH#1367666](https://bugzilla.redhat.com/show_bug.cgi?id=1367666)
 
+## Compositors
+
+✅ Mature compositors include Gnome-Shell (Mutter), KWin/KWinFT, SwayWM, Hikari
+
 ## Web browsers
 
 ✅ Yes!
 
 * Firefox, by default
-* Chrome, since around Chrome 91 / May 2021, with a [flag](https://bugs.chromium.org/p/chromium/issues/detail?id=1085700):
+* With Chrome > 97: `google-chrome-stable --ozone-platform-hint=auto`. I still experience random crashes though (as of March '22).
+  * Previously, since around Chrome 91 / May 2021, with a [flag](https://bugs.chromium.org/p/chromium/issues/detail?id=1085700):
 `google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland &`
-* With Chjrome > 97: `google-chrome-stable --ozone-platform-hint=auto`
 
 
 ## Screensharing
