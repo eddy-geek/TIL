@@ -85,7 +85,7 @@ export QT_QPA_PLATFORMTHEME=kde
 
 ## Dev tools
 
-* ✅ VSCode ([issue](https://github.com/microsoft/vscode/issues/109176))
+* ✅ VSCode ([issue](https://github.com/microsoft/vscode/issues/109176)) (easier config issue [electron#30897](https://github.com/electron/electron/issues/30897)
 
 ```sh
 echo "--enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer
@@ -96,8 +96,11 @@ echo "--enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWire
 ## Other
 
 * Middle-mouse paste - ✅ yes! at least between wayland apps.
-* Focus stealing - ❌
-  * KDE should have [Full xdg_activation_v1 support](https://invent.kde.org/plasma/kwin/-/issues/39) but apps do not support it:
-    * [Previously opened Firefox window is not focused when opening a link from other applications](https://bugzilla.mozilla.org/show_bug.cgi?id=1766269).
-    * Chromium [wayland: Support window activation via standard extensions](https://bugs.chromium.org/p/chromium/issues/detail?id=1175327)
+* Focus stealing - ❌ - *mentioned in KDE's [Plasma/Wayland Showstoppers](https://community.kde.org/Plasma/Wayland_Showstoppers)
+  * KDE should have [Full xdg_activation_v1 support](https://invent.kde.org/plasma/kwin/-/issues/39)
   * Sway has support as well since March '21, [sway#6132](https://github.com/swaywm/sway/pull/6132)
+  * Gnome was the first to have a custom extension
+  * ... but **apps do not support it**:
+    * [Previously opened Firefox window is not focused when opening a link from other applications](https://bugzilla.mozilla.org/show_bug.cgi?id=1766269).
+    * Chromium [wayland: Support window activation via standard extensions](https://bugs.chromium.org/p/chromium/issues/detail?id=1175327) - merged 2022/08/16
+    * Electron [Implement support for xdg_activation_v1 Wayland protocol](https://github.com/electron/electron/issues/30912)
