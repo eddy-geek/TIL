@@ -48,7 +48,8 @@ Also, the [pre-supplied <i>custom</i> keyboard layout](https://web.archive.org/w
 
 * ✅ [phil294/AHK_X11: AutoHotkey for Linux (X11-based systems)](https://github.com/phil294/AHK_X11)
 
-* ✅ KWin Custom shortcuts can input text
+* ✅ KDE - ~Plasma Custom shortcuts can input text~<br>
+  ❌ Custom Shortcuts removed in 5.25 [Plasma bug](https://bugs.kde.org/show_bug.cgi?id=455444)
 
 * 🕱 Tools like xmodmap, xbindkeys don't work with Wayland, but feature-set is arguably covered by the above.
 
@@ -96,6 +97,7 @@ echo "--enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWire
 ## Other
 
 * Middle-mouse paste - ✅ yes! at least between wayland apps.
+
 * Focus stealing - ❌ - *mentioned in KDE's [Plasma/Wayland Showstoppers](https://community.kde.org/Plasma/Wayland_Showstoppers)
   * KDE should have [Full xdg_activation_v1 support](https://invent.kde.org/plasma/kwin/-/issues/39)
   * Sway has support as well since March '21, [sway#6132](https://github.com/swaywm/sway/pull/6132)
