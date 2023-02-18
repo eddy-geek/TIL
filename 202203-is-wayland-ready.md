@@ -55,16 +55,16 @@ Also, the [pre-supplied <i>custom</i> keyboard layout](https://web.archive.org/w
 
 * ⏳ Mouse-sharing support between devices or VMs: coming soon? See [barrier#109](https://github.com/debauchee/barrier/issues/109#issuecomment-1049479068)
 
-* ⏳ Global keyboard shortcut portal [xdg-desktop-portal#624](https://github.com/flatpak/xdg-desktop-portal/issues/624)
+* ✅ Global keyboard shortcut portal [xdg-desktop-portal#624](https://github.com/flatpak/xdg-desktop-portal/issues/624) (Sep'22, KDE support Feb'23/5.27)
 
 
 ### Scripting
 
 * ✅ Compositor-specific tools, like KWin scripts and gnome-shell extensions (both in JavaScript).
 
-* ❌ Tools like xdotool, or [autokey](https://github.com/autokey/autokey) don't work with Wayland.
+* ❌⏳ Tools like xdotool, or [autokey](https://github.com/autokey/autokey) don't work with Wayland. Partial support in [ydotool](https://github.com/ReimuNotMoe/ydotool)
 
-* ❌ GUI-agnostic "screen-scraping" tool [SikuliX](https://sikulix.github.io/), could be adapted to use the screen-sharing portal.
+* ❌ GUI-agnostic "screen-scraping" tool [SikuliX](https://sikulix.github.io/), could be adapted to use the screen-sharing portal. See ([JDK-8269245](https://bugs.openjdk.org/browse/JDK-8269245)).
 
 ## Toolkits
 
