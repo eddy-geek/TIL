@@ -50,3 +50,7 @@ Settings to enable in each webapp's `about:config`:
 
 * Permnently hide tab bar in full-screen: [SO](https://superuser.com/a/1750613)
 * <a href="https://gist.github.com/zzag/e2f0a5e022b726466c29afa3d497a3fc">Firefox Nightly desktop file</a>
+
+Annex: other useful Vertical tabs extensions mentioned on HN:
+* [All Tabs Helper](https://addons.mozilla.org/en-US/firefox/addon/all-tabs-helper/)
+* [Tab Session Manager](https://addons.mozilla.org/en-US/firefox/addon/tab-session-manager/)
