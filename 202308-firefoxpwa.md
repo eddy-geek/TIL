@@ -49,3 +49,4 @@ Settings to enable in each webapp's `about:config`:
 <br> allow userChrome.css to remove tabs
 
 * Permnently hide tab bar in full-screen: [SO](https://superuser.com/a/1750613)
+* <a href="https://gist.github.com/zzag/e2f0a5e022b726466c29afa3d497a3fc">Firefox Nightly desktop file</a>
