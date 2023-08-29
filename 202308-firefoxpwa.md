@@ -35,8 +35,7 @@ Settings to enable in each webapp's `about:config`:
 
 * [Tab Stash](https://addons.mozilla.org/en-US/firefox/addon/tab-stash/)
   * default hotkey Ctrl+Alt+S
-  * css change <a href="https://gist.github.com/hyperfekt/711917abcf1c43aa03c9ba4705efe808">userChrome.css rules to hide Firefox' tab bar even if it is the title bar (tested with version 89 on Linux)</a>
-  * or <a href="https://gist.github.com/BrianGilbert/1ad7e3931406f485a86a35aefb0aa1b1">Firefox userChrome to autohide Sideberry panel and hide titlebar tabs, and autohide Page Actions.</a>
+  * css change <a href="https://gist.github.com/BrianGilbert/1ad7e3931406f485a86a35aefb0aa1b1">Firefox userChrome to autohide Sideberry panel and hide titlebar tabs, and autohide Page Actions.</a>
 
 * [CopyTabTitleUrl](https://addons.mozilla.org/en-GB/firefox/addon/copytabtitleurl/), with following settings:
   * Extended mode
@@ -48,3 +47,5 @@ Settings to enable in each webapp's `about:config`:
 
 * _toolkit.legacyUserProfileCustomizations.stylesheets = true_
 <br> allow userChrome.css to remove tabs
+
+* Permnently hide tab bar in full-screen: [SO](https://superuser.com/a/1750613)
