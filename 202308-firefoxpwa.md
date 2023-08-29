@@ -23,3 +23,28 @@ Settings to enable in each webapp's `about:config`:
 * *firefoxpwa.openOutOfScopeInDefaultBrowser* = *true*
 * *firefoxpwa.allowedDomains* =	*login.live.com,login.microsoftonline.com*
 * *firefoxpwa.launchType* -- maybe *2 - Replace the existing tab*
+
+
+# Other firefox customizations of interest
+
+(mostly in about:config)
+
+* _widget.use-xdg-desktop-portal.mime-handler	= 1_
+* _widget.use-xdg-desktop-portal.file-picker = 1_
+  <br> set file dialog (source [Firefox - ArchWiki](https://wiki.archlinux.org/title/Firefox))
+
+* [Tab Stash](https://addons.mozilla.org/en-US/firefox/addon/tab-stash/)
+  * default hotkey Ctrl+Alt+S
+  * css change <a href="https://gist.github.com/hyperfekt/711917abcf1c43aa03c9ba4705efe808">userChrome.css rules to hide Firefox' tab bar even if it is the title bar (tested with version 89 on Linux)</a>
+  * or <a href="https://gist.github.com/BrianGilbert/1ad7e3931406f485a86a35aefb0aa1b1">Firefox userChrome to autohide Sideberry panel and hide titlebar tabs, and autohide Page Actions.</a>
+
+* [CopyTabTitleUrl](https://addons.mozilla.org/en-GB/firefox/addon/copytabtitleurl/), with following settings:
+  * Extended mode
+  * Enable format2
+  * shortcuts:
+    * format1 = Ctrl+Shift+C = markdown (default) = [${title}](${url})
+    * format2 = Alt-C = <a href="${url}">${title}</a>
+  * Copy in text/html format
+
+* _toolkit.legacyUserProfileCustomizations.stylesheets = true_
+<br> allow userChrome.css to remove tabs
