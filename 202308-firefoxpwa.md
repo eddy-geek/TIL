@@ -51,6 +51,26 @@ Settings to enable in each webapp's `about:config`:
 * Permnently hide tab bar in full-screen: [SO](https://superuser.com/a/1750613)
 * <a href="https://gist.github.com/zzag/e2f0a5e022b726466c29afa3d497a3fc">Firefox Nightly desktop file</a>
 
-Annex: other useful Vertical tabs extensions mentioned on HN:
+## Annex
+
+for sidebar font size
+
+The default sidebar text size seems not to be customized, somehow 13.333 px (while the firefox settings say 16 for default font size...).
+![image](https://github.com/eddy-geek/TIL/assets/2772505/1b452c92-39a4-4009-9b51-97c0f1bcd282)
+try 1.5em ?
+For the CSS of the sidebar, it can be set globally for #sidebar or depending on what kind of content is displayed, eg *Bookmarks* are in `#bookmarksPanel > tree #bookmarks-view` while *Synced Tabs* are in `.tabs-container > .item .tab`, precisely:
+
+```
+html body div.content-container div#template-container.content-scrollable div div.deck div.tabs-container.sync-state.selected div div.tabs-container div.list div#item-foobar.item.client div.item-tabs-list div#tab-foobaz-0.item.tab div.item-title-container p.item-title
+```
+
+while in sidebar.css we have eg
+
+```
+#sidebar-header {
+  font-size: 1.333em;
+```
+
+other useful Vertical tabs extensions mentioned on HN:
 * [All Tabs Helper](https://addons.mozilla.org/en-US/firefox/addon/all-tabs-helper/)
 * [Tab Session Manager](https://addons.mozilla.org/en-US/firefox/addon/tab-session-manager/)
