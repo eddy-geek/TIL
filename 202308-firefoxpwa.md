@@ -41,8 +41,8 @@ Settings to enable in each webapp's `about:config`:
   * Extended mode
   * Enable format2
   * shortcuts:
-    * format1 = Ctrl+Shift+C = markdown (default) = [${title}](${url})
-    * format2 = Alt-C = <a href="${url}">${title}</a>
+    * format1 = Ctrl+Shift+C = markdown (default) = `[${title}](${url})`
+    * format2 = Alt-C = `<a href="${url}">${title}</a>`
   * Copy in text/html format
 
 * _toolkit.legacyUserProfileCustomizations.stylesheets = true_
