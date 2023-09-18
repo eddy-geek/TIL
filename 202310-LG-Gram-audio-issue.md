@@ -64,6 +64,11 @@ and also the longer verb list from [216023 – Speakers not working in Samsung B
 
 Also no improvement after upgrading to kernel 6.5.0-060500rc7-generic using `mainline` tool installed from cappelikan ppa.
 
+[linux - Ubuntu 20.04 LTS no sound on LG Gram 2021 (a lot of troubleshooting attempted) - Super User](https://superuser.com/questions/1627065/ubuntu-20-04-lts-no-sound-on-lg-gram-2021-a-lot-of-troubleshooting-attempted) was also not helpful, but it pointed to this:
+
+**Comment#13 for the exact same model worked!** in [kernel bug 212041 #13](https://bugzilla.kernel.org/show_bug.cgi?id=212041#c13) *LG Gram (2021 Tiger Lake) No sound internel speaker* 🥳
+
+
 ## Annex - config
 
 * 16T90R-K.ADB9U1, 1360P, Ubuntu 22.04, ALSA v: k5.19.0-46-generic, PipeWire v: 0.3.48
