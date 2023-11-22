@@ -21,9 +21,9 @@ Settings to enable in the main FF [extension](https://addons.mozilla.org/firefox
 Settings to enable in each webapp's `about:config`:
 
 * *firefoxpwa.openOutOfScopeInDefaultBrowser* = *true*
-* *firefoxpwa.allowedDomains* =	*login.live.com,login.microsoftonline.com*
+* *firefoxpwa.allowedDomains* =	*login.live.com,login.microsoftonline.com,adfs.a.com*
 * *firefoxpwa.launchType* -- *2 - Replace the existing tab*
-
+* *firefoxpwa.shortcuts.closeTab = false*
 
 # Other firefox customizations of interest
 
