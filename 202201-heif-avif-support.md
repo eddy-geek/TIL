@@ -42,5 +42,5 @@ It is built with HEIC support but unfortunately it [needs](https://github.com/Im
 
 #### ImageMagick 7
 
-Also, almost 2 years after release, ImageMagick7 is still not included in ubuntu, so I got the *AppImage* latest version (`7.1.0-19 Q16-HDRI x86_64 2021-12-18`) installed from [instructions](https://askubuntu.com/a/1309857/220798) ; 
-but is [does not have HEIC](https://github.com/ImageMagick/ImageMagick/issues/4666) built-in.
+Also, almost 2 years after release, ImageMagick7 is still not included in ubuntu, so I got the *AppImage* installed from [instructions](https://askubuntu.com/a/1309857/220798) ; 
+It got built-in HEIC support [added](https://github.com/ImageMagick/ImageMagick/issues/4666) in March 2023, (somewhere between versions 7.1.0-19 and 7.1.1-6).
