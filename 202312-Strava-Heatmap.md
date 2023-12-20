@@ -10,7 +10,7 @@ but going to dev tools to inspect network traffic works as well.
 
 For AlpineQuest, this is the resulting AQX file for `winter` mode:
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <aqx version="11">
 
@@ -27,6 +27,5 @@ For AlpineQuest, this is the resulting AQX file for `winter` mode:
     </source>
 <!-- Put in the_folder/datastore/maps/ -->
 </aqx>
-
 
 ```
