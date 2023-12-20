@@ -1,14 +1,14 @@
 # Strava high-res heatmap
 
-To access tj
+The [strava global heatmap](https://support.strava.com/hc/en-us/articles/216918877-Strava-Metro-and-the-Global-Heatmap) is very useful.
 
-* Strava only allows low resolution(z=13?) tile in public mode.
-* Since you have access to higher resolution (z=16) when logged in strava.com, the resulting session can be reused in common software.
+Strava only allows low resolution(z=13?) tile in public mode.
+But since you have access to higher resolution (z=16) when logged in strava.com, the resulting session can be reused in common software.
 
 A browser plugin allows to retrieve this session ([josm-strava-heatmap](https://github.com/zekefarwell/josm-strava-heatmap))
 but going to dev tools to inspect network traffic works as well.
 
-For AlpineQuest, this is the resulting AQX file for `winter` mode:
+For AlpineQuest, this is the resulting *strava-heatmap-alpinequest.aqx* map definition file for `winter` mode:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
