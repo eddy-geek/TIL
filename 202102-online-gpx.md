@@ -6,6 +6,7 @@
   * [OpenRunner](https://www.openrunner.com) (custom/IGN/OpenCycleMap)
 
 * Draw manual itinerary, display distance/elevation, export as GPX with elevation, and share:
+
   * [AllTrails](https://www.alltrails.com/explore/map/new) (ex-gpsies) (OSM-based only)
   * [OpenRunner](https://www.openrunner.com) (custom/IGN/OpenCycleMap)
   <br/><img src="img/geowww/www-OpenRunner-example.jpg" width="400">
@@ -20,8 +21,10 @@ No current web software allows to add IGN-based altitude.
 
 Use-case: Edit a track recording from MyTrails, Oruxmaps etc.
 
-Split, merge, delete one/many points...
+Split, merge, delete one/many points... [TODO compare them](https://docs.google.com/spreadsheets/d/1ZBKFTQTMZijVf49vbS7oeUfpVRwpN4ZVADwb5oHcVzI/)
 
+* [opentraveller](https://opentraveller.net/) ([fb](https://www.facebook.com/opentraveller01))
+* [gpx.studio](https://gpx.studio/)
 * [opoto wtracks](https://opoto.github.io/wtracks/)
   * open-source
 * [mygpsfiles](http://www.mygpsfiles.com/app/)
@@ -37,9 +40,8 @@ Split, merge, delete one/many points...
 
 [Comparatif : 5 applications GPS pour randonner](https://www.i-trekkings.net/articles-outdoor/comparatif-5-applications-gps/)
 
-Bon article, qui teste **iPhiGéNie / ViewRanger / AlpineQuest / OruxMaps / OsmAnd**. Il manque notablement **MyTrails, Visorando, LocusMaps**.
-
-Pas de détails sur le support de cartes additionnelles "custom", notablement meilleur sur MyTrails, LocusMaps, et OruxMaps, ni sur les formats supportés (nombreux sur Orux et Locus, MGM seulement sur MyTrails)
+Bon article, qui teste **iPhiGéNie / ViewRanger / AlpineQuest / OruxMaps / OsmAnd**. Il manque notablement **MyTrails, Visorando, LocusMaps** ;
+mais sans détails sur le support de cartes additionnelles "custom", notablement meilleur sur MyTrails, LocusMaps, et OruxMaps, ni sur les formats supportés (nombreux sur Orux et Locus, MGM seulement sur MyTrails)
 
 ## Offline Map support:
 
@@ -66,6 +68,8 @@ Pas de détails sur le support de cartes additionnelles "custom", notablement me
 | SRTM-DTED `.hgt`              |  ✓   |   ✓    |   ✕   |   -   |  RW  |
 | `.hdr+dem` GTOPO30...         |  ✓   |   ✕    |       |   -   |  RW  |
 ||||
+
+*Legend: R is read ; RW is read-write*
 
 Notes:
 * MyTrails supports only MGMaps format (either `.sqlite` or *img folder* variants, so it's not included in the table)
