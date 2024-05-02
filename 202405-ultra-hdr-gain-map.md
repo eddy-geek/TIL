@@ -1,5 +1,9 @@
 # Ultra HDR
 
+## TL;DR
+
+I wanted to diplay ultrahdr 
+
 ## Context
 
 ### Image formats
@@ -26,8 +30,9 @@ As Adobe puts it in their 2021 [Gain map specification](https://helpx.adobe.com/
 and
 
 > Gain Maps are currently undergoing standardization in ISO/TC 42 Photography
+> (actually the Adobe-published proposal is what's in the ISO draft).
 
-Google' [libultrahdr](https://github.com/google/libultrahdr) is an implementation of Adobe's spec in JPEG.
+The JPG gain maps (aka "Ultra HDR JPG"), now have a widespread implementation in Google' [libultrahdr](https://github.com/google/libultrahdr) presumably used in Chrome and Android.
 
 > After the gain map is stored in a secondary image, it is appended to a primary image with MPF and GContainer XMP metadata.
 > The primary image GContainer directory must contain an item for the gain map image.
@@ -37,6 +42,9 @@ Also relevant is Apple's [EDR](https://www.digit.in/features/general/apple-edr-h
 Apple HDR images seem to use a proprietary format that relies on [EXIF metadata](https://developer.apple.com/forums/thread/709331?answerId=726119022#726119022) and an embedded HDR gain map image in the HEIC format, for displaying the HDR effect in Photos.<br>
 More precisely it uses two private {MakerApple} EXIF tags:  0x21 ("HDRGamma", global boost to brightness) and 0x30 (how much the embedded gain map adds to the effect, from smallest=8 to 0).<br>
 Relevant thread: [Extracting HDR Gain Map from iOS 14.1+ (iPhone 12+) photos](https://gist.github.com/kiding/fa4876ab4ddc797e3f18c71b3c2eeb3a).
+
+> gregbenz commented on Nov 20, 2023:
+> I believe the Apple implementation is not compliant with the ISO spec (ISO 21496-1). Last I checked, it was using slightly different metadata and a 1D map (the ISO spec uses a 3D spec which should enable better color adaptation from HDR to SDR).
 
 > It seems support for Apple's format was added together with the support for Adobe's format to the Chrome engine. Very nice!
 
@@ -54,8 +62,9 @@ Do not confise the EDR gain map format with the display technology or hacks like
 * Adobe Camera RAW v15.5+
 * Google Photos
 * Google Messages
+* Instagram and Threads
+* ImageMagick, soon, with [#6377](https://github.com/ImageMagick/ImageMagick/issues/6377)
 * not Firefox, and no in any hurry whn it comes to HDR in general...
   
   tracked in [1539685 - \[meta\] Add HDR support to Gecko](https://bugzilla.mozilla.org/show_bug.cgi?id=hdr)
   and specifically [1793091 - HDR images are rendered extremely dark](https://bugzilla.mozilla.org/show_bug.cgi?id=1793091)
-
