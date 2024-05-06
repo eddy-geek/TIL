@@ -115,4 +115,4 @@ Historical references:
   * ... but **apps do not support it**:
     * [Previously opened Firefox window is not focused when opening a link from other applications](https://bugzilla.mozilla.org/show_bug.cgi?id=1766269) / [Support XDG_ACTIVATION_TOKEN env var](https://bugzilla.mozilla.org/show_bug.cgi?id=1767546) -> Fixed in FF-108, merged 2022/11/08.
     * Chromium [wayland: Support window activation via standard extensions](https://bugs.chromium.org/p/chromium/issues/detail?id=1175327) - merged 2022/08/16
-    * Electron [Implement support for xdg_activation_v1 Wayland protocol](https://github.com/electron/electron/issues/30912)
+    * Electron [Implement support for xdg_activation_v1 Wayland protocol](https://github.com/electron/electron/issues/30912) - Fixed in Electron v24, 2023/04
