@@ -94,6 +94,16 @@ echo "--enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWire
 --ozone-platform-hint=auto" >! ~/.config/electron17-flags.conf
 ```
 
+## Fractional scaling
+
+Overall better (at least in KDE). One nitpick is apps which need to display in native resolution to avoid blurry images:
+* Gwenview - [465688 – &quot;Fit&quot; on fractionally scaled wayland display doesn't actually fit](https://bugs.kde.org/show_bug.cgi?id=465688)
+* [GPXSee#478 Fractional scaling support on wayland](https://github.com/tumic0/GPXSee/issues/478) & upstream qt bug.
+
+Historical references:
+* Qt `devicePixelRatio` was introduced with [High-DPI Support in Qt 5.6](https://www.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6)
+* Implementation was done in Qt 6 used in Plasma 6.0 but never backported - [466373 – Qt apps don't use wp-fractional-scale-v1 for hidpi fractional scaling on Wayland](https://bugs.kde.org/show_bug.cgi?id=466373) -*includes [gist](https://gist.github.com/eddy-geek/2a682a415abb5d351537ae3fc865dffd) and image to debug issues*
+
 ## Other
 
 * Middle-mouse paste - ✅ yes! at least between wayland apps.
