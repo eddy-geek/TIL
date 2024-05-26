@@ -3,7 +3,9 @@
 TL;DR: **"Yes but"**:
 * lack of focus stealing (WIP) is really annoying.
 * Command-line setup is needed as many apps will run on XWayland *by default* -- which is "transparent" until it isn't (eg fractional scaling on HiDPI displays)
-* Stability is worse compared to X11 session due to intolerance to crashes [RH#1367666](https://bugzilla.redhat.com/show_bug.cgi?id=1367666)
+* Stability is worse compared to X11 session due to intolerance to crashes:
+  * [RH#1367666](https://bugzilla.redhat.com/show_bug.cgi?id=1367666)
+  * [Rework GNOME Shell's architecture to allow restarting (#5634)](https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5634)
 
 ## Compositors
 
