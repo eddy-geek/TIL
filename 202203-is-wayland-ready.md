@@ -54,12 +54,16 @@ Good intro: [wayland-accessibility-notes](https://github.com/splondike/wayland-a
 
 * ✅ [ydotool](https://github.com/ReimuNotMoe/ydotool/) - [Tutorial](https://gabrielstaples.com/ydotool-tutorial/#gsc.tab=0)
 
+* ✅ Macros: [Espanso](https://espanso.org/)
+
+* ✅ Remapping & Mod keys: [jtroo/kanata](https://github.com/jtroo/kanata) ([Tuto](https://shom.dev/start/using-kanata-to-remap-any-keyboard/), [2](https://dev.to/shanu-kumawat/boost-your-linux-productivity-remapping-useless-keys-with-kanata-3ih5))
+
 * KDE - ~Plasma Custom shortcuts can input text~<br>
   ❌ Custom Shortcuts removed in 5.25 [Plasma bug](https://bugs.kde.org/show_bug.cgi?id=455444)
 
 * 🕱 Tools like xmodmap, xbindkeys, or [phil294/AHK_X11](https://github.com/phil294/AHK_X11) don't work with Wayland, but feature-set is arguably covered by the above.
 
-* ⏳ Mouse-sharing support between devices or VMs: coming soon with Plasma 6.1, June 2024. See [xdg-desktop-portal-kde#12](https://invent.kde.org/plasma/xdg-desktop-portal-kde/-/issues/12), [barrier#109](https://github.com/debauchee/barrier/issues/109#issuecomment-1049479068), [input-leap#1908](https://github.com/input-leap/input-leap/issues/1908).
+* ✅ Mouse-sharing support between devices or VMs: since Plasma 6.1, June 2024. See [xdg-desktop-portal-kde#12](https://invent.kde.org/plasma/xdg-desktop-portal-kde/-/issues/12), [barrier#109](https://github.com/debauchee/barrier/issues/109#issuecomment-1049479068), [input-leap#1908](https://github.com/input-leap/input-leap/issues/1908).
 
 * ✅ Global keyboard shortcut portal [xdg-desktop-portal#624](https://github.com/flatpak/xdg-desktop-portal/issues/624) (Sep'22, KDE support Feb'23/5.27)
 
