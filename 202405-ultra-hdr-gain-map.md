@@ -64,7 +64,15 @@ Do not confise the EDR gain map format with the display technology or hacks like
 * Google Messages
 * Instagram and Threads
 * ImageMagick, soon, with [#6377](https://github.com/ImageMagick/ImageMagick/issues/6377)
-* not Firefox, and no in any hurry whn it comes to HDR in general...
-  
+* not Firefox, and no in any hurry when it comes to HDR in general...
   tracked in [1539685 - \[meta\] Add HDR support to Gecko](https://bugzilla.mozilla.org/show_bug.cgi?id=hdr)
   and specifically [1793091 - HDR images are rendered extremely dark](https://bugzilla.mozilla.org/show_bug.cgi?id=1793091)
+
+## Linux display color management
+
+* GPU
+   * AMD OK since late 2023
+   * Nvidia OK sinec early 2024
+   * Intel HDR support OK merged in April 2024 (Linux 6.9 ? Ubuntu 24.04 has Linux 6.8)
+* Window manager: [wayland-protocols#14](https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/14) to be in staging by Feb 2025. But only KDE imlementation so far.
+* No browser support. Only games, and mpv for HDR video.
