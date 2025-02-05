@@ -31,6 +31,11 @@ Split, merge, delete one/many points... [TODO compare them](https://docs.google.
   * maps: OSM/OTM/IGN
   * display altitude/speed/hr vs distance/time
   * split/merge/clean/elevate/...
+ 
+it would be possible to have better gpx selection using dropbox api, or on the local filesystem with eg js-fileexplorer and the [file system APIs](https://cloudfour.com/thinks/the-many-confusing-file-system-apis/) (gg chrome only)
+
+Examples using FileSystemDirectoryReader:
+[react-dropzone](https://github.com/react-dropzone/file-selector?tab=readme-ov-file#browser-support) ; crust-io/crust-files
 
 # Desktop GPX edition
 
@@ -87,3 +92,5 @@ Also, Orux and supports composite maps, very useful to ad a slope overlay to any
 
 Orux  and AlpineQuest can use DEM elevation models to query altitude of a point and calibrate GPS.
 AlpineQuest
+
+##
