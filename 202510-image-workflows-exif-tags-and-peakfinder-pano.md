@@ -7,8 +7,8 @@ for f in *.jpg
 do
     exiftool -FileName -ImageSize -FileSize -OriginalFileSize -TotalFileSize\
              -DateTimeOriginal -CreateDate -ModifyDate -FileCreateDate -FileModifyDate \
-             -Model -LensModel -ExposureTime -FNumber -ISO -FocalLength \
-             -GPSPosition -GPSAltitude \
+             -Model -LensModel -ExposureTime -FNumber -ISO -FocalLength -Aperture -composite:FieldOfView -Orientation \
+             -GPSPosition -GPSAltitude -GPSImgDirection \
              -ProfileDescription -ColorSpaceTags \
              -MPF:NumberOfImages -MPF:MPImageLength -XMP:DirectoryItemLength -XMP:HdrPlusMakernote -file "$f"
     exiftool $f | wc -l
@@ -28,6 +28,14 @@ Note that
 * imagemagick copies some more tags than exiftool but also some less
 * neither copies MPF (Multi Picture Format) data, which excludes gain map
 
+### Install more recent exiftool on ubuntu
+
+Luckily exiftool seems compatible across ubuntu versions, so
+
+```sh
+wget https://launchpad.net/ubuntu/+archive/primary/+files/libimage-exiftool-perl_13.10+dfsg-1_all.deb
+sudo dpkg -i ~/Downloads/dwnlinux/libimage-exiftool-perl_13.10+dfsg-1_all.deb
+```
 
 ## Peakfinder tips
 
@@ -45,3 +53,36 @@ foreground="${background%.*}_peakf.${background##*.}"
 result="${background%.*}_peaked.${background##*.}"
 magick "$background" \( "$foreground" -gravity south -chop 0x200 \) -gravity north -composite "$result"
 ```
+
+## Panorama builder
+
+Hugin will neef the metadata provided above (FOV).
+
+Right now even for pictures taken within PeakFinder (not imported), some metadata is missing for both hugin and exiftool to compute FOV.
+
+The issue is the *Focal Length* is correct (eg 6.9mm) but *Focal Length In 35mm Format* is set to 0 mm.
+This is fixed with:
+
+```sh
+exiftool -FocalLengthIn35mmFormat='24 mm' -file foo.jpg
+```
+
+(In case it's useful, DxOMark says for Pixel 8 Pro Primary: 50MP 1/1.31″ sensor, 1.2μm pixels, f/1.68-aperture lens)
+
+### With panostart
+
+panostart was installed with:
+
+```
+cpan
+install B/BP/BPOSTLE/Panotools-Script-0.29.tar.gz
+```
+
+Then
+
+```
+panostart --output Makefile --projection 0 --fov 50 --nostacks --loquacious *.JPG
+make
+```
+
+(but this give a bery bright picture, need to tweak exposure)
