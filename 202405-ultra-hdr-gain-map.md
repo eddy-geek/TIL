@@ -1,8 +1,13 @@
-# Ultra HDR
+# Ultra HDR support
 
 ## TL;DR
 
 I wanted to diplay ultrahdr 
+
+## Possible Open-source contributions
+
+* [ImageMagick/ImageMagick#7907](https://github.com/ImageMagick/ImageMagick/issues/7907)
+* no ubuntu packaging of libultrahdr
 
 ## Context
 
@@ -68,15 +73,17 @@ Do not confise the EDR gain map format with the display technology or hacks like
 * Google Messages
 * Instagram and Threads
 * ImageMagick, soon, with [#6377](https://github.com/ImageMagick/ImageMagick/issues/6377)
+    * AppImage libultrahdr still missing [ImageMagick/ImageMagick#7907](https://github.com/ImageMagick/ImageMagick/issues/7907)
 
 ✕ without support
 
 * Firefox -- and not in any hurry when it comes to HDR in general...
   tracked in [1539685 - \[meta\] Add HDR support to Gecko](https://bugzilla.mozilla.org/show_bug.cgi?id=hdr)
   and specifically [1793091 - HDR images are rendered extremely dark](https://bugzilla.mozilla.org/show_bug.cgi?id=1793091)
-* Immich (Google Photo alternative) : [\[Feature\] Support for &quot;Ultra HDR&quot; pictures on Android · immich-app/immich · Discussion #7262](https://github.com/immich-app/immich/discussions/7262) (libvips & flutter-based, see below)
 * NextCloud uses libvips too
 * nothing yet on kde kimageformats side (for gwenview)
+* Immich (Google Photo alternative) : [\[Feature\] Support for &quot;Ultra HDR&quot; pictures on Android · immich-app/immich · Discussion #7262](https://github.com/immich-app/immich/discussions/7262) (libvips & flutter-based, see below)
+* [Ultra HDR support · ente-io/ente · Discussion #779](https://github.com/ente-io/ente/discussions/779)
 
 ## Both: Editors 
 
@@ -105,19 +112,74 @@ https://wiki.archlinux.org/title/KDE#HDR
 
 ## How to develop / add UHDR capability to an app
 
-* [Display Ultra HDR images | Android Developers](https://developer.android.com/media/grow/ultra-hdr/display#java)
 
 ### Relevant image processing libs
 
+* Rust/WASM: [silvia-odwyer/photon: ⚡ Rust/WebAssembly image processing library](https://github.com/silvia-odwyer/photon)
+    * libvips also has Rust [bindings](https://crates.io/crates/libvips)
+
 * [sharp - High performance Node.js image processing](https://sharp.pixelplumbing.com/performance)
+
+# Flutter
 
 Immich uses Flutter which is a topic on its own :-(
 
-* [Image class - widgets library - Dart API](https://api.flutter.dev/flutter/widgets/Image-class.html)
-
-* no ubuntu packaging of libultrahdr
-
+  * [Image class - widgets library - Dart API](https://api.flutter.dev/flutter/widgets/Image-class.html)
+  * On Android [Flutter can Call Native Code with Method Channel | by Vorrawut Judasri | odds.team | Medium](https://medium.com/odds-team/flutter-daily-calling-native-code-with-method-channel-4fba64fedacf#:~:text=Here)
+   * [Impeller rendering engine](https://docs.flutter.dev/perf/impeller#availability) & [Flutter GPU](https://medium.com/flutter/getting-started-with-flutter-gpu-f33d497b7c11) might require dedicated code ?
 ## Links to be sorted
 [Manual creation of UltraHDR images - Processing - discuss.pixls.us](https://discuss.pixls.us/t/manual-creation-of-ultrahdr-images/45004) uses WASM build: libultrahdr-esm.wasm
 
+# Annex: investigation of flutter Android image support for immich#7262 or ente#779
 
+### Android side
+
+[Display Ultra HDR images | Android Developers](https://developer.android.com/media/grow/ultra-hdr/display#java)
+
+```java
+ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), mSourceUri);
+Bitmap bitmap = ImageDecoder.decodeBitmap(source));
+```
+
+```java
+    InputStream is = null;
+    context = getApplicationContext();
+    is = context.getAssets().open("myjpg.jpg");
+    Bitmap bitmap = BitmapFactory.decodeStream(is);
+```
+
+```java
+final Bitmap bitmap = /* Get Bitmap from Image Resource */
+binding.imageContainer.setImageBitmap(bitmap);
+
+// Set color mode of the activity to the correct color mode.
+int colorMode = ActivityInfo.COLOR_MODE_DEFAULT;
+if (bitmap.hasGainmap()) colorMode = ActivityInfo.COLOR_MODE_HDR;
+requireActivity().getWindow().setColorMode(colorMode);
+```
+
+### Flutter side
+
+[Add native Android image decoders supported by API 28+ by bdero · Pull Request #26746 · flutter/engine](https://github.com/flutter/engine/pull/26746/files#diff-8acb2d22b532bddde85ba13937c0338cd6147b06bfaca0e5d7cbf197ad00b38b) → now [FlutterJNI.java](http://FlutterJNI.javahttps://github.com/flutter/flutter/blob/master/engine/src/flutter/shell/platform/android/io/flutter/embedding/engine/FlutterJNI.java)::decodeImage
+”Called by native as a fallback method of image decoding.”
+
+Maybe relevant 
+
+- how they [added webp](https://github.com/flutter/engine/pull/4359/files)
+- and [animated(gif)](https://github.com/flutter/engine/pull/4306).
+- [AVIF support issue](https://github.com/flutter/flutter/issues/61229) — currently native on android only (HDR unclear) or 3rd party plugin
+
+UltrHDR elsewhere
+
+- java lib/app with partial support (not covering editing HDR):  [Ultra HDR photos support · Issue #1124 · T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox/issues/1124) - depends on coil
+- Android gallery in flutter - [Ultra HDR support · Issue #838 · deckerst/aves](https://github.com/deckerst/aves/issues/838)
+
+# Unrelated image stuff
+
+[heic-decode](https://github.com/catdad-experiments/heic-decode) - js lib to convert heif to jpeg — depends on emscripten build of libheif 😮 
+
+[fluttercandies/flutter_photo_manager](https://github.com/fluttercandies/flutter_photo_manager) *“ A Flutter plugin that provides images, videos, and audio abstraction management APIs without interface integration, available on Android, iOS, macOS and OpenHarmony.”*
+
+[ente-io/media_extension: Flutter Plugin for various options for media files](https://github.com/ente-io/media_extension?tab=readme-ov-file)
+
+[fluttercandies/extended_image](https://github.com/fluttercandies/extended_image) : *extension library of images, which supports placeholder(loading)/ failed state, cache network, zoom pan image, photo view, slide-out page, editor (crop, rotate, flip), paint custom etc*
