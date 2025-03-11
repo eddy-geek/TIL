@@ -37,6 +37,8 @@ The JPG gain maps (aka "Ultra HDR JPG"), now have a widespread implementation in
 > After the gain map is stored in a secondary image, it is appended to a primary image with MPF and GContainer XMP metadata.
 > The primary image GContainer directory must contain an item for the gain map image.
 
+slight differences between Google's implementation and ISO. see details in comment [ImageMagick#6377](https://github.com/ImageMagick/ImageMagick/issues/6377#issuecomment-2417281397)
+
 Also relevant is Apple's [EDR](https://www.digit.in/features/general/apple-edr-how-is-it-different-from-regular-hdr-59940.html) format:
 
 Apple HDR images seem to use a proprietary format that relies on [EXIF metadata](https://developer.apple.com/forums/thread/709331?answerId=726119022#726119022) and an embedded HDR gain map image in the HEIC format, for displaying the HDR effect in Photos.<br>
@@ -58,21 +60,64 @@ Do not confise the EDR gain map format with the display technology or hacks like
 
 ## Ultra HDR consumers
 
+✓ With support :
+
 * Google Chrome on Windows and MacOS (v116+), MS Edge (v116+), Brave (v1.58+), and Opera (v102+) all support it by default.
 * Adobe Camera RAW v15.5+
 * Google Photos
 * Google Messages
 * Instagram and Threads
 * ImageMagick, soon, with [#6377](https://github.com/ImageMagick/ImageMagick/issues/6377)
-* not Firefox, and no in any hurry when it comes to HDR in general...
+
+✕ without support
+
+* Firefox -- and not in any hurry when it comes to HDR in general...
   tracked in [1539685 - \[meta\] Add HDR support to Gecko](https://bugzilla.mozilla.org/show_bug.cgi?id=hdr)
   and specifically [1793091 - HDR images are rendered extremely dark](https://bugzilla.mozilla.org/show_bug.cgi?id=1793091)
+* Immich (Google Photo alternative) : [\[Feature\] Support for &quot;Ultra HDR&quot; pictures on Android · immich-app/immich · Discussion #7262](https://github.com/immich-app/immich/discussions/7262) (libvips & flutter-based, see below)
+* NextCloud uses libvips too
+* nothing yet on kde kimageformats side (for gwenview)
+
+## Both: Editors 
+
+* [Support HDR gain maps · Issue #17399 · darktable-org/darktable](https://github.com/darktable-org/darktable/issues/17399)
+  * pretty useful as darktable has good *filters* like local contrast - see [How to reproduce the &quot;Pop&quot; effect of Google Photo Editor](https://photo.stackexchange.com/questions/136272/how-to-reproduce-the-pop-effect-of-google-photo-editor)
+* Photoflow uses libvips but abandoned
+
 
 ## Linux display color management
+
+1000 nits is needed for good effect (eg Pixel 8 pro has 1600 nits HDR peak brightness)
+but my monitors have only 350 (gram) to 450 (M32U) to 750 (SsQ70R TV) nits
+so it's not that useful to try to get the stuff working -- which is still a hassle for now
+https://zamundaaa.github.io/wayland/2024/05/11/more-hdr-and-color.html
+https://www.reddit.com/r/kde/comments/1byny7h/for_those_using_plasma_6_hdr_how_good_is_it_how/
+https://github.com/ImageMagick/ImageMagick/pull/7198#issuecomment-2381592909
 
 * GPU
    * AMD OK since late 2023
    * Nvidia OK sinec early 2024
    * Intel HDR support OK merged in April 2024 (Linux 6.9 ? Ubuntu 24.04 has Linux 6.8)
 * Window manager: [wayland-protocols#14](https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/14) to be in staging by Feb 2025. But only KDE imlementation so far.
-* No browser support. Only games, and mpv for HDR video.
+* No browser support. Only games, wine, and videos with mpv -- not chrome. 
+https://github.com/Zamundaaa/VK_hdr_layer
+https://wiki.archlinux.org/title/KDE#HDR
+
+## How to develop / add UHDR capability to an app
+
+* [Display Ultra HDR images | Android Developers](https://developer.android.com/media/grow/ultra-hdr/display#java)
+
+### Relevant image processing libs
+
+* [sharp - High performance Node.js image processing](https://sharp.pixelplumbing.com/performance)
+
+Immich uses Flutter which is a topic on its own :-(
+
+* [Image class - widgets library - Dart API](https://api.flutter.dev/flutter/widgets/Image-class.html)
+
+* no ubuntu packaging of libultrahdr
+
+## Links to be sorted
+[Manual creation of UltraHDR images - Processing - discuss.pixls.us](https://discuss.pixls.us/t/manual-creation-of-ultrahdr-images/45004) uses WASM build: libultrahdr-esm.wasm
+
+
