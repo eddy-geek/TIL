@@ -172,7 +172,8 @@ Maybe relevant
 UltrHDR elsewhere
 
 - java lib/app with partial support (not covering editing HDR):  [Ultra HDR photos support · Issue #1124 · T8RIN/ImageToolbox](https://github.com/T8RIN/ImageToolbox/issues/1124) - depends on coil
-- Android gallery in flutter - [Ultra HDR support · Issue #838 · deckerst/aves](https://github.com/deckerst/aves/issues/838)
+- "Aves" Android gallery in flutter - [Ultra HDR support · Issue #838 · deckerst/aves](https://github.com/deckerst/aves/issues/838)
+    - gfood example of XMP metadata support: [#894 google xmp refactor](https://github.com/deckerst/aves/commit/b4a5513fe1669ce0b59210e30092517bb9d47e57) + [motion photo support](https://github.com/deckerst/aves/commit/e57484d912c2316bdc09574dec974bf1b5ef1167)
 
 # Unrelated image stuff
 
