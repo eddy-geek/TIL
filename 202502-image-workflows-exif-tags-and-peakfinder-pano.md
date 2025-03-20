@@ -67,7 +67,11 @@ This is fixed with:
 exiftool -FocalLengthIn35mmFormat='24 mm' -file foo.jpg
 ```
 
-(In case it's useful, DxOMark says for Pixel 8 Pro Primary: 50MP 1/1.31″ sensor, 1.2μm pixels, f/1.68-aperture lens)
+In case it's useful, details on the Pixel 8 Pro cameras - I had to change FOV to 61° in PeakFinder:
+
+* Primary: 50MP 1/1.31″ sensor, 1.2μm pixels, f/1.68 lens, 82° fov, 24 mm
+* UW:      48MP 1/2.0"  sensor, 0.8µm pixels, f/1.95 lens, 125.5° fov, 13 mm, 0.65x
+* Tele:    48MP 1/2.55" sensor, 0.7µm pixels, f/2.8  lens, 21.8° fov, 112 mm, 4.7x
 
 ### With panostart
 
