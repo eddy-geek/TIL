@@ -83,7 +83,7 @@ On Android, the app "Bimostitch" gives great results but:
 
 * beware the file size. See below for compression.
 * It removes some metadata. especially, it sets gps coordinates to 0. This can be copied back with exiftoiol as above.
-* It adds some specific XMP metadata like *Use Panorama Viewer = True*. This makes PeakFinder or Google Magic Editor refuse to use the picture ; and it makes it weird to zoom in Google Photo. To remove the whole metadata group:
+* It adds some specific [XMP GPano](https://developers.google.com/streetview/spherical-metadata) panorama metadata like *Use Panorama Viewer = True*. This makes PeakFinder or Google Magic Editor refuse to use the picture ; and it makes it weird to zoom in Google Photo. To remove the whole metadata group:
 
 ```sh
 exiftool -XMP-GPano:all= foo.jpg
