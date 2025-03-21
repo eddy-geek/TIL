@@ -1,6 +1,12 @@
-## General image metadata tips
+## General image metadata command-line tips
 
-Here is a way to get what "important" tags an image has:
+To get **all** tags (exif and others) of file path `foo.jpg` sorted by group:
+
+```sh
+exiftool -a -u -g1 foo.jpg
+```
+
+To select a few of the more relevant (to me) tags:
 
 ```sh
 for f in *.jpg
@@ -24,13 +30,14 @@ if needed the tags can be copied with
 exiftool -TagsFromFile "$source_jpg" "-all:all>all:all" "$dest_jpg"
 ```
 
-Note that 
+Notes:
+
 * imagemagick copies some more tags than exiftool but also some less
 * neither copies MPF (Multi Picture Format) data, which excludes gain map
 
 ### Install more recent exiftool on ubuntu
 
-Luckily exiftool seems compatible across ubuntu versions, so
+Luckily exiftool seems compatible across ubuntu versions, so to install the latest stable build:
 
 ```sh
 wget https://launchpad.net/ubuntu/+archive/primary/+files/libimage-exiftool-perl_13.10+dfsg-1_all.deb
@@ -55,7 +62,7 @@ exiftool "-filemodifydate<datetimeoriginal" .
 
 ## Peakfinder tips
 
-A workflow for adding peak names to an  existing picture using PeakFinder can be:
+A workflow for adding peak names to an existing picture using PeakFinder can be:
 
 * import in peakfinder, edit and export. Make sure to "move up" as much as possible the viewport when editing.
 * since peakfinder will crop it, use Image Magick to get back the original picture size:
@@ -70,9 +77,21 @@ result="${background%.*}_peaked.${background##*.}"
 magick "$background" \( "$foreground" -gravity south -chop 0x200 \) -gravity north -composite "$result"
 ```
 
-## Panorama builder
+## Mobile Panorama builder
 
-Hugin will neef the metadata provided above (FOV).
+On Android, the app "Bimostitch" gives great results but:
+
+* beware the file size. See below for compression.
+* It removes some metadata. especially, it sets gps coordinates to 0. This can be copied back with exiftoiol as above.
+* It adds some specific XMP metadata like *Use Panorama Viewer = True*. This makes PeakFinder or Google Magic Editor refuse to use the picture ; and it makes it weird to zoom in Google Photo. To remove the whole metadata group:
+
+```sh
+exiftool -XMP-GPano:all= foo.jpg
+```
+
+## Desktop Panorama builder
+
+Hugin will need the metadata provided above (FOV).
 
 Right now even for pictures taken within PeakFinder (not imported), some metadata is missing for both hugin and exiftool to compute FOV.
 
@@ -106,3 +125,14 @@ make
 ```
 
 (but this give a bery bright picture, need to tweak exposure)
+
+## Reduce file size before upload
+
+Make a copy of the folder and re-compress in-place only the images above 2 MB:
+
+```sh
+mkdir -p low && cp * low/ && \ 
+find . -maxdepth 1 -type f -name "*.jpg" -size +2M -exec convert {} -quality 72 low/{} \;
+```
+
+The quality "72" tends to give sizes below 2 MB for my camera & pictures.
