@@ -37,6 +37,22 @@ wget https://launchpad.net/ubuntu/+archive/primary/+files/libimage-exiftool-perl
 sudo dpkg -i ~/Downloads/dwnlinux/libimage-exiftool-perl_13.10+dfsg-1_all.deb
 ```
 
+### Date tips
+
+Dates set in google photo will be lost on downlod.
+
+Missing dates can be filled with a sample one like so:
+
+```sh
+exiftool -overwrite_original -writeMode cg -AllDates='2025:03:16 12:12:12' .
+```
+
+And the file mtime can be set to ease sorting:
+
+```sh
+exiftool "-filemodifydate<datetimeoriginal" .
+```
+
 ## Peakfinder tips
 
 A workflow for adding peak names to an  existing picture using PeakFinder can be:
