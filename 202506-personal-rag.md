@@ -32,7 +32,7 @@ Bookmark managers
 > **Linkwarden**: extensive support for third-party integrations. webpage screenshots, Wayback Machine archiving, organization via collections and tags, sharing, pinning, multi-user capabilities with SSO, and a ton of customization options.
 > ton of support for adding bookmarks via third-party tools, which include Floccus sync, desktop apps, Raycast support, and browser extensions. Linkwarden can be installed via bare metal or Docker and requires a PostgreSQL DB.
 
-> **Karakeep** : first release early 2024. Unlike some of the other alternatives, it aims to be an all-encompassing platform for data hoarders with support for features like OCR extraction, simple note-taking functionality, and video archiving via youtube-dl. [HN thread](https://news.ycombinator.com/item?id=42485746)
+> **Karakeep** : first release early 2024. Unlike some of the other alternatives, it aims to be an all-encompassing platform for data hoarders with support for features like OCR extraction, simple note-taking functionality, and video archiving via youtube-dl. [HN thread](https://news.ycombinator.com/item?id=42485746). Can appear in google results with [pipette](https://github.com/DanSnow/hoarder-pipette)
 > Given its extensive functionality, Hoarder requires a bit more overhead to deploy than the others but provides clear instructions on how to do so easily via Docker. 
 
 * **[linkwarden/linkwarden](https://github.com/linkwarden/linkwarden)** [13k gh*]:
@@ -42,6 +42,8 @@ Bookmark managers
 * [sissbruecker/linkding: Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up using Docker.](https://github.com/sissbruecker/linkding) - too minimalist
 * [karakeep](https://github.com/karakeep-app/karakeep) [17k gh*] - (prev. named Hoarder)
   * in-depth guide/review [jameskilby](https://jameskilby.co.uk/2025/01/how-i-migrated-from-pocket-to-hoarder-and-introduced-some-ai-along-the-way/)
+
+many more mentioned with [omnom]((https://news.ycombinator.com/item?id=43680232). also [buku](https://github.com/jarun/Buku)
 
 Linkwarden vs karakeep
 
