@@ -32,7 +32,7 @@ Bookmark managers
 > **Linkwarden**: extensive support for third-party integrations. webpage screenshots, Wayback Machine archiving, organization via collections and tags, sharing, pinning, multi-user capabilities with SSO, and a ton of customization options.
 > ton of support for adding bookmarks via third-party tools, which include Floccus sync, desktop apps, Raycast support, and browser extensions. Linkwarden can be installed via bare metal or Docker and requires a PostgreSQL DB.
 
-> **Karakeep** : first release early 2024. Unlike some of the other alternatives, it aims to be an all-encompassing platform for data hoarders with support for features like OCR extraction, simple note-taking functionality, and video archiving via youtube-dl.
+> **Karakeep** : first release early 2024. Unlike some of the other alternatives, it aims to be an all-encompassing platform for data hoarders with support for features like OCR extraction, simple note-taking functionality, and video archiving via youtube-dl. [HN thread](https://news.ycombinator.com/item?id=42485746)
 > Given its extensive functionality, Hoarder requires a bit more overhead to deploy than the others but provides clear instructions on how to do so easily via Docker. 
 
 * **[linkwarden/linkwarden](https://github.com/linkwarden/linkwarden)** [13k gh*]:
