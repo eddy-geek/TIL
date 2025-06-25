@@ -21,6 +21,12 @@ brew install --cask alt-tab
 # * General: Start at login, no Menubar icon
 # * Appearance: AppIcons, Style: Preview selected window
 
+# Quicksilver is a Stoplight replacement, on Command-space, and also helps with global shortcuts
+brew install --cask quicksilver
+
+# Anytype Note application
+brew install --cask anytype
+
 # Restore home and end
 mkdir -p $HOME/Library/KeyBindings
 echo '{
