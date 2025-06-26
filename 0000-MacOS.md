@@ -24,14 +24,14 @@ brew install --cask alt-tab
 # Automation, scripting, shortcuts for window switcher
 brew install --cask hammerspoon
 
+# Window snapping
+brew install --cask rectangle
+
 # Clipboard manager - https://maccy.app/
 brew install maccy
 
 # Quicksilver is a Stoplight replacement, on Command-space, and also helps with global shortcuts
 brew install --cask quicksilver
-
-# Anytype Note application
-brew install --cask anytype
 
 # Restore home and end
 mkdir -p $HOME/Library/KeyBindings
@@ -56,6 +56,12 @@ defaults write -g NSWindowShouldDragOnGesture -bool true
 
 # Keyboard layout editor
 brew install --cask ukelele
+
+# Anytype Note application
+brew install --cask anytype
+
+# IDEs
+brew install --cask visual-studio-code
 ```
 
 Other
