@@ -21,6 +21,12 @@ brew install --cask alt-tab
 # * General: Start at login, no Menubar icon
 # * Appearance: AppIcons, Style: Preview selected window
 
+# Automation, scripting, shortcuts for window switcher
+brew install --cask hammerspoon
+
+# Clipboard manager - https://maccy.app/
+brew install maccy
+
 # Quicksilver is a Stoplight replacement, on Command-space, and also helps with global shortcuts
 brew install --cask quicksilver
 
@@ -51,3 +57,8 @@ defaults write -g NSWindowShouldDragOnGesture -bool true
 # Keyboard layout editor
 brew install --cask ukelele
 ```
+
+Other
+
+* System settings
+  * Battery > Options > Untick "Slightly dim the display on battery"
