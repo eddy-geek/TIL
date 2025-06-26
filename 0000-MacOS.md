@@ -5,9 +5,7 @@
 
 # Decent mouse scrolling
 brew install mos
-# if installed from web, whiletlist it :
-cd /Applications/
-xattr -d com.apple.quarantine Mos.app
+xattr -d com.apple.quarantine /Applications/Mos.app
 # Then launch and untick ReveScroll ; set Launch on Login, Hide status bar icon
 
 # Hide Menubar icons
@@ -29,6 +27,7 @@ brew install --cask rectangle
 
 # Move & Resize from anywhere
 brew install --cask easy-move-plus-resize
+xattr -d com.apple.quarantine /Applications/Easy\ Move+Resize.app
 
 # Clipboard manager - https://maccy.app/
 brew install maccy
