@@ -27,6 +27,9 @@ brew install --cask hammerspoon
 # Window snapping
 brew install --cask rectangle
 
+# Move & Resize from anywhere
+brew install --cask easy-move-plus-resize
+
 # Clipboard manager - https://maccy.app/
 brew install maccy
 
