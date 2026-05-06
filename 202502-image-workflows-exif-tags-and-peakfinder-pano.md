@@ -77,6 +77,24 @@ result="${background%.*}_peaked.${background##*.}"
 magick "$background" \( "$foreground" -gravity south -chop 0x200 \) -gravity north -composite "$result"
 ```
 
+### Combining 2 peakfinder images
+
+A smart blending algorithm to combine 2 export of the same peakfinder, typically with different line-of-sight.
+
+This method only works on clear background eg sky/cloud, and will keep both text, leading to overlap and possibly low readability.
+The idea is to darken dark areas (to keep both text) and lighten the rest (to keep both white box). Since we use min and max, similar parts of both images are not affected.
+
+```
+magick "$img1" "$img2" \
+-alpha off -fx "
+  dark=0.3;
+  iu=0.2126*u.r + 0.7152*u.g + 0.0722*u.b;
+  iv=0.2126*v.r + 0.7152*v.g + 0.0722*v.b;
+  (iu<dark || iv<dark) ? min(u,v) : max(u,v)
+" result.jpg
+```
+
+
 ## Mobile Panorama builder
 
 On Android, the app "Bimostitch" gives great results but:
