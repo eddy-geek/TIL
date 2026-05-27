@@ -1,148 +1,502 @@
-# GlobalProtect override
+# macOS DNS recovery after GlobalProtect VPN or security-client state changes
 
 ## Desired state
 
-Even after GlobalProtect is 'aagressively' stopped, DNS resolver #1 must point to the correct IP e.g. at home: 8.8.8.8 (Google) ; at work, some coporate IP (e.g. 10.0.0.0/8 Private range)
+After changing networks, disconnecting from VPN, or restarting corporate security clients, macOS DNS resolution should match the current network.
 
-### Temporary aproach
+Examples:
 
-If GlobalProtect and Netskope are fighting over who gets to write to configd and leaving you with 8.8.8.8, take the wheel manually. Force your Wi-Fi interface (en0) to use the corporate DNS as its primary fallback:
+- At home, DNS should normally come from DHCP, usually your home router, ISP, or a manually selected resolver such as `1.1.1.1` (Cloudflare resolver) or `8.8.8.8` (Google resolver).
+- On the corporate network or while connected to VPN, DNS may need to point to corporate resolvers (typically within 10.0.0.0/8 Private range).
+- When leaving the corporate network or VPN, stale corporate DNS resolvers should not remain the highest-priority resolver for general internet lookups.
+
+The goal is to restore a clean and supportable DNS state when resolver configuration becomes stale.
+
+---
+
+## Temporary manual DNS override
+
+If DNS resolution is broken and you need a short-term workaround, you can set DNS servers manually for the Wi-Fi service:
 
 ```sh
-sudo networksetup -setdnsservers Wi-Fi <IP>
+sudo networksetup -setdnsservers Wi-Fi <DNS_IP_1> <DNS_IP_2>
+````
+
+For example, on a home network:
+
+```sh
+sudo networksetup -setdnsservers Wi-Fi 1.1.1.1 8.8.8.8
 ```
 
-*Once you do this, you will need to revert it to Empty when you leave the corporate network ecosystem, or your home Wi-Fi won't resolve anything:*
+When you leave that network, or when you want macOS to use DHCP-provided DNS again, revert the Wi-Fi service to automatic DNS:
 
-`sudo networksetup -setdnsservers Wi-Fi Empty`
+```sh
+sudo networksetup -setdnsservers Wi-Fi Empty
+```
 
+Use manual DNS only as a temporary workaround. If the device is managed by enterprise MDM or security tools, persistent DNS changes may be overwritten by configuration profiles or endpoint agents.
+
+***
 
 ## 1. Problem
 
-Symptom: after network change, `dig google.com` fails.
+### Symptom
 
-Due to enterprise MDM (Mobile Device Management) watchdogs like Jamf or native launchd keep-alive loops. If your IT department has a configuration profile enforcing those daemons, launchctl unload will absolutely get overridden and rejected a few seconds later.
+After a network change, VPN disconnect, or security-client state change, DNS lookups fail.
 
-The services also can't be removed without disabling SIP. In that specific adversarial context, applying `chmod -x` to the application directory is the only solution: by stripping execute permissions from the directory, you are breaking the watchdog’s ability to even look inside the folder to restart the binary.
-But it’s a sledgehammer approach that leaves system configuration daemons (configd, mDNSResponder) confused.
+Example:
 
-Corporate security suites like Netskope utilize **macOS System Extensions** (`com.apple.NetworkExtension`). These run directly inside the kernel-level network loop. When you killed the parent GUI application, the system extension remained active in memory and left corporate dynamic store overrides (`scutil` keys) trapped in the system configuration daemon (`configd`). This resulted in a **DNS black hole**: your routing tables were fine, but your resolver chain was completely hijacked.
+```sh
+dig google.com
+```
 
----
+may time out or return no useful answer, even though the default route is correct and raw network connectivity still works.
 
-## 2. Investigation Logs & Critical Meanings
+### Likely cause
 
-### Command Group A: Routing State Analysis
+The routing layer and the DNS resolver layer are separate.
 
-* `sudo route get default`
-* `netstat -rn`
-* **Critical Output:** `gateway: 192.168.1.1`, `interface: en0`, `Destination: default -> Gateway: 192.168.1.1`.
-* **Meaning:** Your physical IP routing layer was completely normal. Traffic knew exactly how to reach your home router. The problem was strictly isolated to name resolution.
+A machine can have:
 
-### Command Group B: Resolver Chain Diagnostics
+* a valid IP address,
+* a valid default gateway,
+* working connectivity to the local router,
 
-* `scutil --dns`
-* **Critical Output:** * `resolver #1` -> `nameserver[0] : <corporate-ip>` (`order : 101200`)
-* `resolver #2` -> `nameserver[2] : 192.168.1.1` (`order : 200000`)
+but still fail name resolution if macOS is using stale, unreachable, or inappropriate DNS resolvers.
 
-* **Meaning:** macOS prioritizes resolvers based on the `order` index. The corporate DNS was pinned at the top priority index. Your home router resolver was pushed to second place, meaning all internet lookup requests timed out searching for a corporate IP that does not exist on your home network.
+This can happen when VPN clients, network filters, proxies, endpoint security products, or managed configuration profiles modify DNS resolver state and that state does not cleanly update after a network transition.
 
-### Command Group C: Dynamic Store and Architecture Verification
+On managed devices, some settings may be enforced by MDM profiles, LaunchDaemons, system extensions, or security agents. In that case, local changes may be temporary and can be reverted automatically.
 
-* `echo "list .*DNS.*" | scutil`
-* `sudo systemextensionsctl uninstall <ID>`
-* **Critical Output:** * `subKey [3] = State:/Network/Service/4416AD74-.../DNS`
-* `Error: This tool cannot be used if System Integrity Protection is enabled.`
+***
 
+## 2. Investigation logs and meanings
 
-* **Meaning:** Netskope registered isolated dynamic store GUID profiles directly into the network stack. Because System Integrity Protection (SIP) blocks user-space execution forces from removing kernel-level extensions, the extension stayed alive, holding those dynamic store keys hostage even though the user-space apps were dead.
+### Have you start turining it off and on again ?
 
----
+Try cycling Wi-Fi or the active service:
 
-## 3. A Resilient `vpn-reset.sh`
+```sh
+networksetup -setairportpower Wi-Fi off
+sleep 3
+networksetup -setairportpower Wi-Fi on
+```
 
-This script handles the issue programmatically. It applies the brute-force binary lockout, programmatically discovers and purges every non-DHCP corporate registry key from `scutil`, cleans up legacy network setup clutter, and forces a dynamic state override to bypass any lingering kernel-level extension traps.
+Or renew DHCP:
+
+```sh
+sudo ipconfig set en0 DHCP
+```
+
+Note: `en0` is commonly Wi-Fi on many Macs, but not guaranteed. Confirm the active device with:
+
+```sh
+networksetup -listallhardwareports
+```
+
+### A. Routing state
+
+Commands:
+
+```sh
+route get default
+netstat -rn
+```
+
+Useful output:
+
+```text
+gateway: 192.168.1.1
+interface: en0
+default -> 192.168.1.1
+```
+
+Meaning:
+
+The physical routing layer appears healthy. The Mac knows how to reach the local router. If DNS still fails, the issue is probably in resolver configuration rather than basic routing.
+
+***
+
+### B. DNS resolver chain
+
+Command:
+
+```sh
+scutil --dns
+```
+
+Example concerning output:
+
+```text
+resolver #1
+  nameserver[0] : <corporate-dns-ip>
+  order          : 101200
+
+resolver #2
+  nameserver[0] : 192.168.1.1
+  order          : 200000
+```
+
+Meaning:
+
+macOS may prefer the resolver with the lower priority order. If an unreachable corporate resolver remains above the local resolver, normal internet lookups can fail or time out.
+
+This is especially likely when the resolver points to an address that is only reachable while on VPN or the corporate network.
+
+***
+
+### C. Dynamic store inspection
+
+Command:
+
+```sh
+echo "list .*DNS.*" | scutil
+```
+
+Example output:
+
+```text
+subKey [3] = State:/Network/Service/90ABCDEF-.../DNS
+```
+
+Meaning:
+
+macOS keeps runtime network state in the System Configuration dynamic store. DNS-related keys here can help identify whether stale per-service DNS state exists.
+
+On managed devices, dynamic store keys keys may be regenerated by DHCP, VPN clients, network extensions, MDM profiles, or security agents. They can get out of sync when the VPN stops abruptly.
+
+***
+
+## 3. Safe DNS recovery script
+
+This script performs a conservative DNS recovery:
+
+1. Shows the current network services.
+2. Shows the current DNS resolver state.
+3. Resets DNS for selected physical services back to DHCP, unless explicit DNS servers are provided.
+4. Renews DHCP on likely active hardware ports.
+5. Flushes the DNS cache.
+6. Prints the final resolver state.
+
+It does not disable security products, remove network services, change application permissions, or delete arbitrary dynamic-store keys.
+
+Save as:
+
+```sh
+dns-reset.sh
+```
+
+Script:
 
 ```bash
 #!/bin/bash
+set -euo pipefail
+
 # ==============================================================================
-# VPN-RESET.SH: Resilient Corporate Network Stack Purge & DHCP Restore
+# dns-reset.sh
+# Conservative macOS DNS recovery after VPN or network state changes.
+#
+# Usage:
+#   sudo ./dns-reset.sh
+#   sudo ./dns-reset.sh 1.1.1.1 8.8.8.8
+#
+# If DNS servers are provided, they are applied to selected physical services.
+# If no DNS servers are provided, selected services are reset to DHCP-provided DNS.
 # ==============================================================================
 
-# Ensure script runs with root privileges
 if [ "$EUID" -ne 0 ]; then
   echo "[-] This script requires administrative privileges. Re-running with sudo..."
   exec sudo "$0" "$@"
 fi
 
-echo "[*] 1. Executing Binary Blockade..."
-# Block execution directories to counter MDM watchdog daemon triggers
-chmod -x /Applications/Netskope\ Client.app /Applications/GlobalProtect.app 2>/dev/null
-killall -9 GlobalProtect "Netskope Client" PanGPS 2>/dev/null
+DNS_SERVERS=("$@")
 
-echo "[*] 2. Programmatically Purging Corporate DNS Keys from Dynamic Store..."
-# Extract all runtime DNS configurations, protecting only the core system DHCP map
-STALE_KEYS=$(echo "list State:/Network/.*DNS.*" | scutil | awk '{print $3}' | grep -E "Service|Global" | grep -v "DHCP-en0")
+echo "[*] Current network services:"
+networksetup -listallnetworkservices || true
+echo
 
-if [ -n "$STALE_KEYS" ]; then
-    scutil <<EOF
-open
-$(for key in $STALE_KEYS; do echo "remove $key"; done)
-close
-EOF
-    echo "[+] Vaporized stale corporate scutil bindings."
-else
-    echo "[+] Dynamic store is clear of standard stale keys."
-fi
+echo "[*] Current DNS resolver state:"
+scutil --dns || true
+echo
 
-echo "[*] 3. Sweeping Polluted Network Setup Interfaces..."
-# Loop through all network services, destroying obsolete or profile-injected entities
-networksetup -listallnetworkservices | grep -v "\*" | while read -r service; do
-    if [[ "$service" =~ "Wi-Fi" || "$service" =~ "AirPort" || "$service" =~ "Bluetooth" ]]; then
-        # Force native interfaces back to unmanaged DHCP mode
-        networksetup -setdnsservers "$service" Empty 2>/dev/null
-        continue
+# Services to handle conservatively.
+# Add or remove names based on your local Mac configuration.
+CANDIDATE_SERVICES=(
+  "Wi-Fi"
+  "USB 10/100/1000 LAN"
+  "Thunderbolt Ethernet"
+  "Ethernet"
+)
+
+echo "[*] Updating DNS settings for known physical network services..."
+
+for service in "${CANDIDATE_SERVICES[@]}"; do
+  if networksetup -listallnetworkservices | sed 's/^\*//' | grep -Fxq "$service"; then
+    if [ "${#DNS_SERVERS[@]}" -gt 0 ]; then
+      echo "[+] Setting DNS for [$service] to: ${DNS_SERVERS[*]}"
+      networksetup -setdnsservers "$service" "${DNS_SERVERS[@]}" || true
+    else
+      echo "[+] Resetting DNS for [$service] to DHCP/default"
+      networksetup -setdnsservers "$service" Empty || true
     fi
-    echo "[-] Removing ghost/polluted service: [$service]"
-    networksetup -removenetworkservice "$service" 2>/dev/null
+  fi
 done
 
-echo "[*] 4. Executing Dictator Override Against System Extensions..."
-# Force a definitive global resolver map directly to the hardware layer,
-# overriding any silent interceptions by the active kernel extension.
-scutil <<EOF
-open
-d.init
-d.add ServerAddresses * 192.168.1.1 1.1.1.1 8.8.8.8
-set State:/Network/Global/DNS
-close
-EOF
+echo
+echo "[*] Renewing DHCP on active hardware ports..."
 
-echo "[*] 5. Cycling Network Interface Stack..."
-# Force the OS to tear down dynamic connection tables and rebuild from zero
-ipconfig set en0 NONE 2>/dev/null
-sleep 1
-ipconfig set en0 DHCP 2>/dev/null
+# Renew DHCP on detected interfaces for the selected services.
+for service in "${CANDIDATE_SERVICES[@]}"; do
+  if networksetup -listallnetworkservices | sed 's/^\*//' | grep -Fxq "$service"; then
+    device="$(networksetup -listallhardwareports | awk -v svc="$service" '
+      $0 == "Hardware Port: " svc { found=1 }
+      found && /^Device:/ { print $2; exit }
+    ')"
 
-# Flush kernel-level DNS daemon cache
-killall -HUP mDNSResponder
+    if [ -n "${device:-}" ]; then
+      echo "[+] Renewing DHCP on [$service] device [$device]"
+      ipconfig set "$device" DHCP || true
+    fi
+  fi
+done
 
-echo "[=] Execution Complete. Network infrastructure reverted to pristine state."
+echo
+echo "[*] Flushing DNS cache..."
+killall -HUP mDNSResponder 2>/dev/null || true
 
+echo
+echo "[*] Final DNS resolver state:"
+scutil --dns || true
+
+echo
+echo "[=] DNS recovery complete."
+echo "    Test with:"
+echo "      dig google.com"
+echo "      scutil --dns"
 ```
 
-To start
+***
+
+## 4. Optional temporary DNS override
+
+To force public DNS temporarily:
+
+```sh
+sudo ./dns-reset.sh 1.1.1.1 8.8.8.8
+```
+
+To return to DHCP-provided DNS:
+
+```sh
+sudo ./dns-reset.sh
+```
+
+***
+
+## 5. Restarting VPN or corporate clients
+
+If the machine is managed, prefer normal restart methods rather than modifying app permissions or killing background processes.
+
+Examples:
+
+```sh
+open -a "GlobalProtect"
+open -a "Netskope Client"
+```
+
+If either application does not start cleanly, or if DNS settings are immediately rewritten after reset, involve IT support. That usually means the behavior is enforced by a configuration profile, endpoint security policy, network extension, or MDM-managed setting.
+
+***
+
+## 6. Quick validation checklist
+
+Run:
+
+```sh
+route get default
+scutil --dns
+dig google.com
+```
+
+Expected results:
+
+* `route get default` shows a valid local gateway.
+* `scutil --dns` shows reachable DNS resolvers appropriate for the current network.
+* `dig google.com` returns an answer without timing out.
+
+
+## 7. Last resort: fully stopping a broken GlobalProtect or security-client state
+
+A VPN or endpoint security client can leave the machine in a state where:
+
+- DNS points to resolvers that are unreachable from the current network.
+- A Network Extension, content filter, or proxy component continues to influence traffic after the GUI app is closed.
+- The local agent restarts automatically after being killed.
+- MDM-managed settings restore the broken configuration shortly after manual changes.
+- The user cannot reach the internet well enough to download tools, open tickets, or recover normally.
+
+This section is for emergency recovery only. On a managed corporate device, disabling VPN or endpoint security software may violate policy or leave the machine out of compliance. Prefer an IT-approved recovery path whenever possible.
+
+
+### 7.1 Why normal stop/unload commands may not work
+
+On managed macOS devices, applications like GlobalProtect and endpoint security clients are often more than one visible app.
+
+They may include:
+
+- a GUI application in `/Applications`;
+- background LaunchAgents or LaunchDaemons;
+- privileged helper tools;
+- Network Extensions;
+- content filters;
+- DNS proxy components;
+- configuration profiles installed by MDM;
+- watchdog or keep-alive behavior that restarts services if they exit.
+
+That means commands such as:
+
+```sh
+killall GlobalProtect
+launchctl bootout system /Library/LaunchDaemons/<daemon>.plist
+````
+
+may only stop part of the product, or may be immediately reversed by:
+
+* `launchd` keep-alive configuration;
+* a vendor watchdog process;
+* an MDM profile;
+* a security agent;
+* a Network Extension that remains active after the parent GUI exits.
+
+This is why the visible application can appear closed while DNS or network filtering behavior remains active.
+
+***
+
+### 7.2 SIP and why some components cannot be removed normally
+
+System Integrity Protection, or SIP, restricts what even the `root` user can modify on macOS.
+
+For VPN and endpoint security software, this matters because some components are integrated through Apple-supported system mechanisms such as:
+
+* System Extensions;
+* Network Extensions;
+* content filters;
+* DNS proxy extensions;
+* MDM-managed configuration profiles.
+
+If SIP is enabled, some low-level removal operations are intentionally blocked. For example, attempting to forcibly uninstall a system extension may fail with an error similar to:
+
+```sh
+systemextensionsctl list
+# ...
+# *       *       <ID>      com.paloaltonetworks.GlobalProtect.client.extension (6.2.8-416/1)       GlobalProtectExtension  [activated enabled]
+
+sudo systemextensionsctl uninstall <ID>`
+# Error: This tool cannot be used if System Integrity Protection is enabled.
+```
+
+That means macOS is preventing local userspace processes from removing protected system-integrated components without the proper approval path.
+
+***
+
+### 7.3 Emergency containment if the client is broken and internet access is unavailable
+
+If the device is unusable, IT is unavailable, and the client immediately restarts itself into a broken state, an emergency containment step may be required to regain basic network access.
+
+One possible containment technique is to remove execute permission from the application bundle directory.
+This can prevent some watchdog or launcher paths from traversing into the application bundle and starting binaries inside it.
+However, this is a blunt instrument.
+This method does not reliably disable every component. It will not stop already-loaded Network Extensions, content filters, DNS proxies, LaunchDaemons, or MDM-enforced settings. It can also leave the product partially installed and in an unsupported state.
+
+For example, corporate security suites like Netskope use **macOS System Extensions** (`com.apple.NetworkExtension`). These run directly inside the kernel-level network loop. The system extension remained active in memory and left corporate dynamic store overrides (`scutil` keys) trapped in the system configuration daemon (`configd`). This can result in a **broken DNS**: your routing tables are fine, but your resolver chain is out-of-date.
+
+If emergency containment is necessary, use a controlled sequence and keep the commands reversible:
 
 ```sh
 #!/bin/bash
+set -euo pipefail
 
-echo "--- Re-enabling Corporate Binaries ---"
-# 1. Restore execute permissions
-sudo chmod +x /Applications/GlobalProtect.app /Applications/Netskope\ Client.app 2>/dev/null
+echo "[*] Emergency containment for broken VPN/security-client state"
+echo "[!] Use only when normal recovery paths have failed."
 
-# 2. Use 'open' instead of raw execution so it doesn't hijack your current shell session
-open -a /Applications/GlobalProtect.app
-#open -a /Applications/Netskope\ Client.app 2>/dev/null
+if [ "$EUID" -ne 0 ]; then
+  echo "[-] Re-running with sudo..."
+  exec sudo "$0" "$@"
+fi
 
-echo "=== VPN Services Signaled to Start ==="
+echo "[*] Capturing current DNS state before changes..."
+scutil --dns > /tmp/dns-before-emergency-containment.txt 2>/dev/null || true
+
+echo "[*] Preventing selected app bundles from being launched directly..."
+chmod -x /Applications/GlobalProtect.app 2>/dev/null || true
+chmod -x /Applications/Netskope\ Client.app 2>/dev/null || true
+
+echo "[*] Attempting graceful process termination..."
+pkill -TERM -f "GlobalProtect" 2>/dev/null || true
+pkill -TERM -f "PanGPS" 2>/dev/null || true
+pkill -TERM -f "Netskope" 2>/dev/null || true
+
+sleep 3
+
+echo "[*] Attempting final process stop for remaining matching processes..."
+pkill -KILL -f "GlobalProtect" 2>/dev/null || true
+pkill -KILL -f "PanGPS" 2>/dev/null || true
+pkill -KILL -f "Netskope" 2>/dev/null || true
+
+echo "[*] Resetting DNS on common physical services..."
+for service in "Wi-Fi" "Ethernet" "Thunderbolt Ethernet" "USB 10/100/1000 LAN"; do
+  if networksetup -listallnetworkservices | sed 's/^\*//' | grep -Fxq "$service"; then
+    echo "[+] Resetting DNS for [$service]"
+    networksetup -setdnsservers "$service" Empty 2>/dev/null || true
+  fi
+done
+
+echo "[*] Renewing DHCP on detected hardware devices..."
+networksetup -listallhardwareports | awk '
+  /^Hardware Port:/ { port=$0 }
+  /^Device:/ { print $2 }
+' | while read -r device; do
+  if [ -n "$device" ]; then
+    echo "[+] Renewing DHCP on [$device]"
+    ipconfig set "$device" DHCP 2>/dev/null || true
+  fi
+done
+
+echo "[*] Flushing DNS cache..."
+killall -HUP mDNSResponder 2>/dev/null || true
+
+echo "[*] Final DNS state:"
+scutil --dns || true
+
+echo
+echo "[=] Emergency containment complete."
+echo "    Previous DNS state saved to:"
+echo "    /tmp/dns-before-emergency-containment.txt"
+echo
+echo "    Test with:"
+echo "      dig google.com"
+echo "      route get default"
+echo "      scutil --dns"
 ```
+
+***
+
+### 7.6 Reversing emergency containment
+
+As soon as basic internet access is restored, reverse the permission change or reinstall/remediate the client through IT.
+
+To re-enable the application bundles:
+
+```sh
+sudo chmod +x /Applications/GlobalProtect.app
+sudo chmod +x /Applications/Netskope\ Client.app
+```
+
+Then start the applications normally:
+
+```sh
+open -a "GlobalProtect"
+open -a "Netskope Client"
+```
+
+If the applications fail to launch after permissions are restored, reinstall or repair them using the official installer or an IT-provided remediation package.
